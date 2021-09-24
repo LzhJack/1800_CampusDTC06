@@ -6,12 +6,9 @@
 
 ## General Info
 This browser based web application to ...
-<<<<<<< HEAD
 *Hi my name is Jack. I'm excited about this project because I enjoy coding.
-=======
 Hi my name is Urjit, I'm excited about this project.
 	
->>>>>>> 987ad05636f522b998698bff6399db747d455586
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
