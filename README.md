@@ -7,7 +7,8 @@
 ## General Info
 This browser based web application to ...
 *Hi my name is Jack. I'm excited about this project because I enjoy coding.
-Hi my name is Urjit, I'm excited about this project.
+*Hi my name is Urjit, I'm excited about this project.
+*Hi I'm Teferi and I'm excited.
 	
 ## Technologies
 Technologies used for this project:
