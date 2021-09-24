@@ -6,7 +6,7 @@
 
 ## General Info
 This browser based web application to ...
-	
+*Hi my name is Jack. I'm excited about this project because I enjoy coding.
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
