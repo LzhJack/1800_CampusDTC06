@@ -86,7 +86,8 @@ input[type=reset]:hover {
   background-color: #371BB1;
 }
 
-input[type=text_area] {
+input[type=text_area],
+input[type=password] {
   background-color: #e0d8d8;
   border: none;
   color: #0d0d0d;
@@ -103,7 +104,8 @@ input[type=text_area] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text_area]:focus {
+input[type=text_area]:focus,
+input[type=password]  {
   background-color: #ccc2c2;
   outline-color: #371BB1;
 }
