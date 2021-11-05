@@ -87,6 +87,7 @@ input[type=reset]:hover {
 }
 
 input[type=text_area],
+#login_button,
 input[type=password] {
   background-color: #e0d8d8;
   border: none;
@@ -105,7 +106,12 @@ input[type=password] {
 }
 
 input[type=text_area]:focus,
+#login_button,
 input[type=password]  {
   background-color: #ccc2c2;
   outline-color: #371BB1;
+}
+
+#login_button {
+  background-color: #05F4B7;
 }
