@@ -51,10 +51,8 @@
 
     <script>
         firebase.auth().onAuthStateChanged((user) => {
-            if (user & !creating_account) {
-
-                window.location.assign("main.html"); //re-direct to main.html
-
+            if (user && !creating_account) {
+                window.location.assign("main.html");
             }
         });
     </script>

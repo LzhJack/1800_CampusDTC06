@@ -43,8 +43,8 @@
      var current_option = login_button.value
 
      if (current_option == 'Sign Up') {
-         creating_account = true
-         console.log("Signing Up")
+         creating_account = true;
+         console.log("Signing Up");
          var email = document.getElementById("login_email");
          var password = document.getElementById("password");
 
@@ -77,8 +77,8 @@
          const promise = auth.signInWithEmailAndPassword(email.value, password.value);
 
          promise.catch(e => alert(e.message)) //.then(window.location.assign('main.html'));;
+         
      }
-     creating_account = false
  }
 
 
