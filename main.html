@@ -9,12 +9,12 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Firebase 8 CDNs-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -22,89 +22,132 @@
     <!-- Link to the api keys for your firebase project -->
 
     <script src="scripts/firebaseAPI.js"></script>
+    <script src="scripts/main.js"></script>
+    <link rel="stylesheet" href="styles/main.css">
 
+    <!--  jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+    <!-- Bootstrap Date-Picker Plugin -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
     <title>IMinder</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                      <li><a class="nav-link" href="profile.html">Profile</a></li>
-                      <li><a class ="nav-link" href="ContactUs.html">Contact Us</a></li>
-                      <li><a class ="nav-link" href="settings.html">Settings</a></li>
-                    </ul>
-                  </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="login.html" id='user_name'>Welcome</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Main</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="reminders.html">Reminder</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="" id="user_name" onclick="signOut()">Log out</a>
-            </li>
-        </ul>
-    </nav>
-    <div class="px-4 py-5 my-5 text-center">
-        <img class="d-block mx-auto mb-4" src="images/logoimg.png" alt="" width=35% height=35%>
-        <h1 class="display-5 fw-bold">Hi, Welcome to IMinder</h1>
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4">This is our index page</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" width="200" height="200"
-                    class="btn btn-warning btn-lg px-4 gap-3">Explore</button>
-            </div>
-        </div>
-    </div>
 
-    <footer class="navbar justify-content-evenly bg-dark fixed-bottom">
-        <div class="container py-3">
-            <a class="nav-link" href="main.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-                <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-              </svg></a>
-              <a class="nav-link" href="reminders.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-              </svg></a>               
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" id="user_name"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto mr-1">
+                        <li class="nav-item ml-auto mr-1">
+                            <a class="nav-link" href="" id="log_out" onclick="signOut()">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="row justify-content-md-center" style="padding-top: 5em;">
+
+            <div id="card_container">
+                <!-- Pre made empty card -->
+                <template>
+                    <div class="assignment_card" id="assignment_card">
+
+                        <!-- Card content -->
+                        <div class="card-body pb-3" id="card_body">
+
+                            <!-- Title -->
+                            <form id="content_store" onclick="collapse_obj(this)">
+                                <fieldset class="mb-3" id="personalInfoFields" disabled>
+                                    <div class="form-group">
+                                        <input type="text" id="assignment_title" class="form-control"
+                                            placeholder="Assignment Title">
+                                    </div>
+                                    <div class="form-group" style="padding-top: 2em;">
+                                        <textarea type="text-area" id="assignment_description" class="form-control"
+                                            placeholder="Assignment Description" rows="4"></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-md-center" style="padding-top: 1em;">
+                                        <label>Due Date</label>
+                                        <input class="form-control" id="due_date" name="date" placeholder="Due Date"
+                                            type="text" onclick="select_date()" />
+                                    </div>
+
+                                </fieldset>
+
+                            </form>
+
+                            <div class="collapse-content" id="collapse_content">
+
+                                <div class="collapse" id="collapseExample">
+                                    <div class="d-flex justify-content-end mt-5" id="collapse_div">
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="disable_card_form(this, false)">Edit</button>
+                                        <span style="width: 10px"></span>
+                                        <button type="button" class="btn btn-info"
+                                            onclick="saveUserInfo(this)">Save</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </template>
+
+
+            </div>
+
+
+            <footer class="w-100 py-4 flex-shrink-0">
+                <div class="container py-4">
+                    <button id="add_card" onclick="add_card()"><i class="fa fa-solid fa-plus fa-3x"></i></button>
+                </div>
+            </footer>
         </div>
-   </footer>
+
+
+    </div>
 
 
     <!-- Optional JavaScript; choose one of the two! -->
-    
-}
+
+
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-        </script>
-
-    <script>
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                console.log(user)
-            }
-            else {
-                // If the user is not logged in redirect them to login.html
-                window.location.assign("login.html");
-            }
-        });
     </script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
+    <script>
+        $(document).ready(function () {
+            var date_input = $('input[name="date"]'); //our date input has the name "date"
+            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+            var options = {
+                format: 'mm/dd/yyyy',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            };
+            date_input.datepicker(options);
+        })
+    </script>
 </body>
 
 </html>

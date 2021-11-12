@@ -82,7 +82,3 @@
  }
 
 
- function signOut() {
-     auth.signOut();
-     alert("Sign Out Successfully from System");
- }
