@@ -36,6 +36,7 @@ function set_user_name(user) {
             $("#user_name").text('Welcome ' + user_Name);
         })
 }
+var cards_lists = []
 
 function load_cards(user) {
     var card_list = ''
@@ -55,6 +56,8 @@ function load_cards(user) {
         .then(function () {
             card_id.forEach(function (element) {
                 cards_data = db.collection("users").doc(user.uid).collection("cards").doc(String(element));
+                cards_lists.push(user.uid);
+
                 //get the document for current user.
                 cards_data.get()
                     .then(userDoc => {
@@ -62,6 +65,8 @@ function load_cards(user) {
                         var title = userDoc.data().title;
                         var description = userDoc.data().description;
                         var card_id = userDoc.data().card_id;
+
+                        cards_lists.push(card_id);
 
 
                         create_card_from_db(title, description, due_date, card_id);
@@ -85,6 +90,11 @@ function create_card_from_db(title, description, due_date, card_id) {
     clon.getElementById('collapseExample').id = card_id + 4;
     clon.getElementById('collapse_div').id = card_id + 5;
 
+    // Set input ids
+    clon.getElementById("assignment_title").id = card_id + 'title';
+    clon.getElementById("assignment_description").id = card_id + 'desc';
+    clon.getElementById("due_date").id = card_id + 'due';
+
     document.getElementById('card_container').appendChild(clon);
 }
 
@@ -105,22 +115,44 @@ function collapse_obj(obj) {
 }
 
 
-function saveUserInfo(obj) {
+async function saveUserInfo(obj) {
     disable_card_form(obj, true);
 
+    // Navigate to the collapseExample equivalent html
     var card_id = String(obj.parentElement.id);
-    console.log(card_id);
     var section2 = document.getElementById(card_id);
     var card_id2 = String(section2.parentElement.id);
-    console.log(card_id2);
-
     var section3 = document.getElementById(card_id2);
-    console.log(card_active);
 
+    await save_new_info(card_id2)
     if (card_active) {
         card_active = false;
         return new bootstrap.Collapse(section3)
     }
+}
+
+function get_cardid(cardid) {
+    if (cardid.length == 6) {
+        found_card_id = cardid.match(/.{1,5}/g);
+        return found_card_id[0]
+    } else {
+        found_card_id = cardid.match(/.{1,6}/g);
+        return found_card_id[0]
+    }
+}
+
+async function save_new_info(card_id) {
+    // Save the acutal new infromation
+    actual_cardid = get_cardid(card_id)
+    console.log(cards_lists[0]);
+    console.log(actual_cardid);
+
+    db.collection("users").doc(cards_lists[0]).collection("cards").doc(actual_cardid).set({
+        card_id: actual_cardid,
+        description: document.getElementById(actual_cardid + 'desc').value,
+        due: document.getElementById(actual_cardid + 'due').value,
+        title: document.getElementById(actual_cardid + 'title').value,
+    })
 }
 
 function disable_card_form(obj, state) {
