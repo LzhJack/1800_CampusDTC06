@@ -37,7 +37,7 @@ function set_user_name(user) {
         })
 }
 var cards_lists = []
-
+var user_card_list = []
 function load_cards(user) {
     var card_list = ''
     var card_id = []
@@ -45,6 +45,7 @@ function load_cards(user) {
     currentUser.get()
         .then(userDoc => {
             card_list = userDoc.data().cards;
+            user_card_list.push(card_list);
         })
         .then(function () {
             try {
@@ -54,10 +55,10 @@ function load_cards(user) {
             }
         })
         .then(function () {
+            cards_lists.push(user.uid);
             card_id.forEach(function (element) {
                 cards_data = db.collection("users").doc(user.uid).collection("cards").doc(String(element));
-                cards_lists.push(user.uid);
-
+            
                 //get the document for current user.
                 cards_data.get()
                     .then(userDoc => {
@@ -144,7 +145,7 @@ function get_cardid(cardid) {
 async function save_new_info(card_id) {
     // Save the acutal new infromation
     actual_cardid = get_cardid(card_id)
-    console.log(cards_lists[0]);
+    console.log(cards_lists);
     console.log(actual_cardid);
 
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(actual_cardid).set({
@@ -171,10 +172,34 @@ function disable_card_form(obj, state) {
 
 
 function add_card() {
-    var temp = document.getElementsByTagName("template")[0];
-    var clon = temp.content.cloneNode(true);
-    clon.getElementById('collapseExample').id = 'yes';
-    document.getElementById('card_container').appendChild(clon);
+    // var temp = document.getElementsByTagName("template")[0];
+    // var clon = temp.content.cloneNode(true);
+    // clon.getElementById('collapseExample').id = 'yes';
+    // document.getElementById('card_container').appendChild(clon);
+    if (cards_lists > 1) {
+        last_element = cards_lists[cards_lists.length - 1];
+        found_card_number = last_element.match(/.{1,4}/g);
+        new_number = parseInt(found_card_number[1]);
+        new_number = new_number + 1;
+        new_card_id = 'card' + String(new_number);
+        create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', new_card_id);
+        cards_lists.push(new_card_id);
+        user_card_list[0] = user_card_list[0] + ' ' +  new_card_id;
+
+        db.collection("users").doc(cards_lists[0]).update({
+            cards: user_card_list[0]
+        })
+    }
+    else {
+        //This meanns the user has no cards ...
+        last_element = cards_lists[cards_lists.length - 1];
+        found_card_number = last_element.match(/.{1,4}/g);
+        new_number = parseInt(found_card_number[1]);
+        new_number = new_number + 1;
+        new_card_id = 'card' + String(new_number);
+        console.log(new_card_id);
+    }
+    
 }
 
 
