@@ -172,11 +172,7 @@ function disable_card_form(obj, state) {
 
 
 function add_card() {
-    // var temp = document.getElementsByTagName("template")[0];
-    // var clon = temp.content.cloneNode(true);
-    // clon.getElementById('collapseExample').id = 'yes';
-    // document.getElementById('card_container').appendChild(clon);
-    if (cards_lists > 1) {
+    if (cards_lists.length > 1) {
         last_element = cards_lists[cards_lists.length - 1];
         found_card_number = last_element.match(/.{1,4}/g);
         new_number = parseInt(found_card_number[1]);
