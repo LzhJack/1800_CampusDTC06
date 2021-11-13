@@ -81,4 +81,6 @@
      }
  }
 
-
+function create_card_collection() {
+    
+}

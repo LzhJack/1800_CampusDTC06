@@ -36,11 +36,24 @@ function set_user_name(user) {
             $("#user_name").text('Welcome ' + user_Name);
         })
 }
-var cards_lists = []
-var user_card_list = []
-function load_cards(user) {
-    var card_list = ''
-    var card_id = []
+
+var cards_lists = [];
+var user_card_list = [];
+var card_documents = [];
+
+async function get_documents(user_id) {
+    const snapshot = await db.collection('users').doc(user_id).collection('cards').get()
+    snapshot.docs.map(doc => {
+        var single_doc = doc.data();
+        card_documents.push(single_doc);
+    });
+}
+
+async function load_cards(user) {
+    var card_list = '';
+    var card_id = [];
+
+    // Get users uid
     currentUser = db.collection("users").doc(user.uid);
     currentUser.get()
         .then(userDoc => {
@@ -54,27 +67,29 @@ function load_cards(user) {
                 no_cards_exist();
             }
         })
+
+    cards_lists.push(user.uid);
+
+    await get_documents(user.uid)
         .then(function () {
-            cards_lists.push(user.uid);
-            card_id.forEach(function (element) {
-                cards_data = db.collection("users").doc(user.uid).collection("cards").doc(String(element));
-            
-                //get the document for current user.
-                cards_data.get()
-                    .then(userDoc => {
-                        var due_date = userDoc.data().due;
-                        var title = userDoc.data().title;
-                        var description = userDoc.data().description;
-                        var card_id = userDoc.data().card_id;
-
-                        cards_lists.push(card_id);
+            card_documents.forEach(function (element) {
 
 
-                        create_card_from_db(title, description, due_date, card_id);
-                    })
+                var due_date = element['due']
+                var title = element['title']
+                var description = element['description']
+                var card_id = element['card_id']
+
+
+                cards_lists.push(card_id);
+                create_card_from_db(title, description, due_date, card_id);
+
             })
         })
+    
 }
+
+
 
 function create_card_from_db(title, description, due_date, card_id) {
     var temp = document.getElementsByTagName("template")[0];
@@ -172,11 +187,7 @@ function disable_card_form(obj, state) {
 
 
 function add_card() {
-    // var temp = document.getElementsByTagName("template")[0];
-    // var clon = temp.content.cloneNode(true);
-    // clon.getElementById('collapseExample').id = 'yes';
-    // document.getElementById('card_container').appendChild(clon);
-    if (cards_lists > 1) {
+    if (cards_lists.length > 1) {
         last_element = cards_lists[cards_lists.length - 1];
         found_card_number = last_element.match(/.{1,4}/g);
         new_number = parseInt(found_card_number[1]);
@@ -184,7 +195,7 @@ function add_card() {
         new_card_id = 'card' + String(new_number);
         create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', new_card_id);
         cards_lists.push(new_card_id);
-        user_card_list[0] = user_card_list[0] + ' ' +  new_card_id;
+        user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
 
         db.collection("users").doc(cards_lists[0]).update({
             cards: user_card_list[0]
@@ -199,7 +210,7 @@ function add_card() {
         new_card_id = 'card' + String(new_number);
         console.log(new_card_id);
     }
-    
+
 }
 
 
