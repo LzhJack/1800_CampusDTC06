@@ -144,8 +144,7 @@ function get_cardid(cardid) {
 
 async function save_new_info(card_id) {
     // Save the acutal new infromation
-    actual_cardid = get_cardid(card_id)
-    console.log(cards_lists);
+    actual_cardid = get_cardid(card_id);
     console.log(actual_cardid);
 
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(actual_cardid).set({
@@ -156,17 +155,6 @@ async function save_new_info(card_id) {
     })
 }
 
-function get_highest_card() {
-    local_current_heighest_card = 0
-    if (card_documents == null) {
-        return current_highest_card = 0
-    } else {
-        card_documents.forEach(function (element) {
-            var card_id = element['card_id'];
-        })
-    }
-
-}
 
 
 function disable_card_form(obj, state) {
@@ -195,9 +183,6 @@ function add_card() {
         cards_lists.push(new_card_id);
         user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
 
-        db.collection("users").doc(cards_lists[0]).update({
-            cards: user_card_list[0]
-        });
     } else {           
         cards_lists.push('card1');
         db.collection('users').doc(cards_lists[0]).collection("cards").doc("card1").set({
@@ -221,15 +206,3 @@ function no_cards_exist() {
 }
 no_cards_exist();
 
-function select_date() {
-    var date_input = $('input[name="date"]'); //our date input has the name "date"
-    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-    var options = {
-        format: 'mm/dd/yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-    };
-    date_input.datepicker(options);
-
-}
