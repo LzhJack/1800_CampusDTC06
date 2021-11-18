@@ -41,3 +41,7 @@ button {
 .assignment_card {
   margin-top: 2em;
 }
+
+#remove_card {
+  background-color: red;
+}

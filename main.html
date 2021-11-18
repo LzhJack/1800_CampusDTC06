@@ -71,7 +71,7 @@
                         <div class="card-body pb-3" id="card_body">
 
                             <!-- Title -->
-                            <form id="content_store" onclick="collapse_obj(this)">
+                            <form id="content_store" onclick="collapse_obj(this, false)">
                                 <fieldset class="mb-3" id="personalInfoFields" disabled>
                                     <div class="form-group">
                                         <input type="text" id="assignment_title" class="form-control"
@@ -95,6 +95,9 @@
 
                                 <div class="collapse" id="collapseExample">
                                     <div class="d-flex justify-content-end mt-5" id="collapse_div">
+                                        <button type="button" class="btn btn-secondary" id="remove_card"
+                                            onclick="remove_card()">Remove</button>
+                                        <span style="width: 10px"></span>
                                         <button type="button" class="btn btn-secondary"
                                             onclick="disable_card_form(this, false)">Edit</button>
                                         <span style="width: 10px"></span>
