@@ -44,20 +44,28 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" id="user_name"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto mr-1">
-                        <li class="nav-item ml-auto mr-1">
-                            <a class="nav-link" href="" id="log_out" onclick="signOut()">Log out</a>
-                        </li>
-                    </ul>
-                </div>
+              <a class="navbar-brand" href="#">
+                <img src="/images/logoimg.png" width="30" height="30" class="d-inline-block align-top" alt="IMinder">
+                
+                </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/reminders.html">Reminders</a>
+                    </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login.html">Login/Logout</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-        </nav>
+          </nav>
+        </header>
+      
     </header>
     <div class="container">
         <div class="row justify-content-md-center" style="padding-top: 5em;">
@@ -81,10 +89,10 @@
                                         <textarea type="text-area" id="assignment_description" class="form-control"
                                             placeholder="Assignment Description" rows="4" maxlength="500"></textarea>
                                     </div>
-                                    <div class="d-flex justify-content-md-left" style="padding-top: 1em;">
+                                    <div class="d-flex justify-content-md-center" style="padding-top: 1em;">
                                         <label>Due Date</label>
                                         <input class="form-control" id="due_date" name="date" placeholder="Due Date"
-                                            type="date" maxlength="10" style="width: 160px;" />
+                                            type="text" maxlength="10" onclick="select_date()" />
                                     </div>
 
                                 </fieldset>
@@ -94,24 +102,16 @@
                             <div class="collapse-content" id="collapse_content">
 
                                 <div class="collapse" id="collapseExample">
-                                    <div class="d-flex justify-content-end" id="collapse_div">
-                                        <div id="HASH" class="blue-msg">
-                                            <div id="left">
-                                                <button type="button" class="d-inline-block btn btn-secondary"
-                                                    id="remove_card" onclick="remove_card()">Remove</button>
-                                            </div>
-                                            <div id="right">
-                                                <button type="button" class="btn btn-secondary"
-                                                    onclick="disable_card_form(false)">Edit</button>
-                                                <button type="button" class="btn btn-info"
-                                                    onclick="saveUserInfo()">Save</button>
-                                            </div>
-                                        </div>
-
+                                    <div class="d-flex justify-content-end mt-5" id="collapse_div">
+                                        <button type="button" class="btn btn-secondary" id="remove_card"
+                                            onclick="remove_card()">Remove</button>
+                                        <span style="width: 10px"></span>
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="disable_card_form(this, false)">Edit</button>
+                                        <span style="width: 10px"></span>
+                                        <button type="button" class="btn btn-info"
+                                            onclick="saveUserInfo(this)">Save</button>
                                     </div>
-
-                                    
-
                                 </div>
 
                             </div>
@@ -141,6 +141,19 @@
     </script>
     <script src="scripts/main.js"></script>
 
+    <script>
+
+        function select_date() {
+            var date_input = $('input[name="date"]'); //our date input has the name "date"
+            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+            var options = {
+                format: 'mm/dd/yyyy',
+                todayHighlight: true,
+                autoclose: true,
+            };
+            date_input.datepicker(options);
+        }
+    </script>
 </body>
 
 </html>
