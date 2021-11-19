@@ -50,3 +50,16 @@ button {
 .assignment_card {
   box-shadow: 0 5px 20px 3px #371BB1;
 }
+
+#HASH {
+  width: 100%;
+}
+
+#HASH div {
+  width: 49%;
+  display: inline-block;
+}
+
+#right {
+  text-align: right;
+}
