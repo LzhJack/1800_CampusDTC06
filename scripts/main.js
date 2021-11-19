@@ -64,7 +64,6 @@ async function load_cards(user) {
                 var description = element['description']
                 var card_id = element['card_id']
 
-
                 cards_lists.push(card_id);
                 create_card_from_db(title, description, due_date, card_id);
 
@@ -76,6 +75,7 @@ async function load_cards(user) {
 
 
 function create_card_from_db(title, description, due_date, card_id) {
+
     var temp = document.getElementsByTagName("template")[0];
     var clon = temp.content.cloneNode(true);
 
@@ -96,6 +96,32 @@ function create_card_from_db(title, description, due_date, card_id) {
     clon.getElementById("due_date").id = card_id + 'due';
 
     document.getElementById('card_container').appendChild(clon);
+    change_box_shadow(card_id, due_date, true);
+}
+
+function change_box_shadow(card_id, due_date, on_load) {
+    if (on_load) {
+        if (due_date <= get_current_day()) {
+            card = document.getElementById(card_id);
+            card.style.boxShadow =  "0 5px 20px 3px red";
+            card.style.border =  "2px solid red";
+        }
+    }
+    else if (!on_load){
+        let current_card_id = sessionStorage.getItem('card_id');
+        due_date = document.getElementById(current_card_id + 'due');
+        console.log(due_date.value)
+        if (due_date.value <= get_current_day()) {
+            cardcc = document.getElementById(current_card_id);
+            cardcc.style.boxShadow =  "0 5px 20px 3px red";
+            cardcc.style.border =  "2px solid red";
+        }
+        else if (due_date.value > get_current_day()) {
+            cardcc = document.getElementById(current_card_id);
+            cardcc.style.boxShadow =  "0 5px 20px 3px #371BB1";
+            cardcc.style.border =  "2px solid #371BB1";
+        }
+    }
 }
 
 var card_active = false;
@@ -106,9 +132,9 @@ function collapse_obj(obj, using_card_id) {
         let parent_div = section.parentElement;
         let current_card_id = parent_div.parentElement;
         sessionStorage.setItem('card_id', current_card_id.id);
-    
+
         let collase_div = document.getElementById(current_card_id.id + '4');
-    
+
         if (!card_active) {
             card_active = true;
             return new bootstrap.Collapse(collase_div)
@@ -125,9 +151,9 @@ function collapse_obj(obj, using_card_id) {
 }
 
 
-async function saveUserInfo(obj) {
-    disable_card_form(obj, true);
-
+async function saveUserInfo() {
+    disable_card_form(true);
+    change_box_shadow('', '', false);
     let current_card_id = sessionStorage.getItem('card_id');
     let collapsable = document.getElementById(current_card_id + '4');
 
@@ -154,7 +180,7 @@ async function save_new_info() {
 
 
 
-function disable_card_form(obj, state) {
+function disable_card_form(state) {
     let current_card_id = sessionStorage.getItem('card_id');
 
 
@@ -163,7 +189,7 @@ function disable_card_form(obj, state) {
 
 
 function add_card() {
-    if(!card_active) {
+    if (!card_active) {
         if (cards_lists.length > 1) {
             last_element = cards_lists[cards_lists.length - 1];
             found_card_number = last_element.match(/.{1,4}/g);
@@ -174,8 +200,8 @@ function add_card() {
             cards_lists.push(new_card_id);
             user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
             collapse_obj(new_card_id, true);
-    
-        } else {           
+            disable_card_form(false);
+        } else {
             cards_lists.push('card1');
             db.collection('users').doc(cards_lists[0]).collection("cards").doc("card1").set({
                 title: 'Assignment Title',
@@ -184,10 +210,10 @@ function add_card() {
                 card_id: 'card1'
             });
             create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', "card1");
-    
-        } 
+
+        }
     }
-      
+
 }
 
 function remove_card() {
@@ -207,3 +233,12 @@ function no_cards_exist() {
 }
 no_cards_exist();
 
+function get_current_day() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+}
