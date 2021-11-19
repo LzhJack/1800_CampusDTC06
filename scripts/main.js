@@ -182,7 +182,7 @@ async function save_new_info() {
 
 function disable_card_form(state) {
     let current_card_id = sessionStorage.getItem('card_id');
-
+    console.log(document.getElementById(current_card_id + '2'));
 
     document.getElementById(current_card_id + '2').disabled = state;
 }
@@ -239,6 +239,6 @@ function get_current_day() {
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    today = yyyy + '-' + mm + '-' + dd;
+    today = mm + '/' + dd + '/' + yyyy;
     return today;
 }
