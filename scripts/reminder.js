@@ -1,0 +1,1 @@
+document.getElementById("myDiv2").innerHTML=sessionStorage.getItem("page1content");

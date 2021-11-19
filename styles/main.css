@@ -27,6 +27,7 @@ button {
 }
 
 .assignment_card {
+  
   background-color: white;
   border-radius: 10px 10px 10px 10px;
 }
@@ -62,4 +63,8 @@ button {
 
 #right {
   text-align: right;
+}
+
+.mb-3 {
+  cursor: pointer;
 }

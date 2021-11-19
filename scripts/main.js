@@ -83,6 +83,10 @@ function create_card_from_db(title, description, due_date, card_id) {
     clon.getElementById("assignment_description").value = description;
     clon.getElementById("due_date").value = due_date;
 
+    clon.getElementById("assignment_title").placeholder = title;
+    clon.getElementById("assignment_description").placeholder = description;
+    clon.getElementById("due_date").placeholder = due_date;
+
     clon.getElementById('assignment_card').id = card_id;
     clon.getElementById('content_store').id = card_id + 1;
     clon.getElementById('personalInfoFields').id = card_id + 2;
@@ -103,23 +107,23 @@ function change_box_shadow(card_id, due_date, on_load) {
     if (on_load) {
         if (due_date <= get_current_day()) {
             card = document.getElementById(card_id);
-            card.style.boxShadow =  "0 5px 20px 3px red";
-            card.style.border =  "2px solid red";
+            card.style.boxShadow = "0 5px 20px 3px red";
+            card.style.border = "2px solid red";
         }
     }
-    else if (!on_load){
+    else if (!on_load) {
         let current_card_id = sessionStorage.getItem('card_id');
         due_date = document.getElementById(current_card_id + 'due');
         console.log(due_date.value)
         if (due_date.value <= get_current_day()) {
             cardcc = document.getElementById(current_card_id);
-            cardcc.style.boxShadow =  "0 5px 20px 3px red";
-            cardcc.style.border =  "2px solid red";
+            cardcc.style.boxShadow = "0 5px 20px 3px red";
+            cardcc.style.border = "2px solid red";
         }
         else if (due_date.value > get_current_day()) {
             cardcc = document.getElementById(current_card_id);
-            cardcc.style.boxShadow =  "0 5px 20px 3px #371BB1";
-            cardcc.style.border =  "2px solid #371BB1";
+            cardcc.style.boxShadow = "0 5px 20px 3px #371BB1";
+            cardcc.style.border = "2px solid #371BB1";
         }
     }
 }
@@ -241,4 +245,15 @@ function get_current_day() {
 
     today = mm + '/' + dd + '/' + yyyy;
     return today;
+}
+
+function send_to_reminder() {
+    let current_card_id = sessionStorage.getItem('card_id');
+
+    var pageContent = document.getElementById(current_card_id +'1').innerHTML;
+    sessionStorage.setItem("page1content", pageContent)
+    window.location.assign("./reminders.html");
+
+
+
 }
