@@ -64,7 +64,6 @@ async function load_cards(user) {
                 var description = element['description']
                 var card_id = element['card_id']
 
-
                 cards_lists.push(card_id);
                 create_card_from_db(title, description, due_date, card_id);
 
@@ -76,6 +75,7 @@ async function load_cards(user) {
 
 
 function create_card_from_db(title, description, due_date, card_id) {
+
     var temp = document.getElementsByTagName("template")[0];
     var clon = temp.content.cloneNode(true);
 
@@ -96,107 +96,134 @@ function create_card_from_db(title, description, due_date, card_id) {
     clon.getElementById("due_date").id = card_id + 'due';
 
     document.getElementById('card_container').appendChild(clon);
+    change_box_shadow(card_id, due_date, true);
+}
+
+function change_box_shadow(card_id, due_date, on_load) {
+    if (on_load) {
+        if (due_date <= get_current_day()) {
+            card = document.getElementById(card_id);
+            card.style.boxShadow =  "0 5px 20px 3px red";
+            card.style.border =  "2px solid red";
+        }
+    }
+    else if (!on_load){
+        let current_card_id = sessionStorage.getItem('card_id');
+        due_date = document.getElementById(current_card_id + 'due');
+        console.log(due_date.value)
+        if (due_date.value <= get_current_day()) {
+            cardcc = document.getElementById(current_card_id);
+            cardcc.style.boxShadow =  "0 5px 20px 3px red";
+            cardcc.style.border =  "2px solid red";
+        }
+        else if (due_date.value > get_current_day()) {
+            cardcc = document.getElementById(current_card_id);
+            cardcc.style.boxShadow =  "0 5px 20px 3px #371BB1";
+            cardcc.style.border =  "2px solid #371BB1";
+        }
+    }
 }
 
 var card_active = false;
 
-function collapse_obj(obj) {
-    var section = document.getElementById(obj.id);
-    var parent_div = section.parentElement;
-    var card_id = String(parent_div.children[1].id);
-    var section2 = document.getElementById(card_id);
-    var card_id2 = String(section2.children[0].id);
+function collapse_obj(obj, using_card_id) {
+    if (!using_card_id) {
+        let section = document.getElementById(obj.id);
+        let parent_div = section.parentElement;
+        let current_card_id = parent_div.parentElement;
+        sessionStorage.setItem('card_id', current_card_id.id);
 
-    var section3 = document.getElementById(card_id2);
-    if (!card_active) {
-        card_active = true;
-        return new bootstrap.Collapse(section3)
+        let collase_div = document.getElementById(current_card_id.id + '4');
+
+        if (!card_active) {
+            card_active = true;
+            return new bootstrap.Collapse(collase_div)
+        }
+    }
+    else {
+        sessionStorage.setItem('card_id', obj);
+        let collase_div = document.getElementById(obj + '4');
+        if (!card_active) {
+            card_active = true;
+            return new bootstrap.Collapse(collase_div)
+        }
     }
 }
 
 
-async function saveUserInfo(obj) {
-    disable_card_form(obj, true);
+async function saveUserInfo() {
+    disable_card_form(true);
+    change_box_shadow('', '', false);
+    let current_card_id = sessionStorage.getItem('card_id');
+    let collapsable = document.getElementById(current_card_id + '4');
 
-    // Navigate to the collapseExample equivalent html
-    var card_id = String(obj.parentElement.id);
-    var section2 = document.getElementById(card_id);
-    var card_id2 = String(section2.parentElement.id);
-    var section3 = document.getElementById(card_id2);
-
-    await save_new_info(card_id2)
+    await save_new_info()
     if (card_active) {
+        sessionStorage.removeItem('card_id');
         card_active = false;
-        return new bootstrap.Collapse(section3)
-    }
-}
-
-function get_cardid(cardid) {
-    if (cardid.length == 6) {
-        found_card_id = cardid.match(/.{1,5}/g);
-        return found_card_id[0]
-    } else {
-        found_card_id = cardid.match(/.{1,6}/g);
-        return found_card_id[0]
+        return new bootstrap.Collapse(collapsable)
     }
 }
 
 
-async function save_new_info(card_id) {
+async function save_new_info() {
     // Save the acutal new infromation
-    actual_cardid = get_cardid(card_id);
-    console.log(actual_cardid);
+    let current_card_id = sessionStorage.getItem('card_id');
 
-    db.collection("users").doc(cards_lists[0]).collection("cards").doc(actual_cardid).set({
-        card_id: actual_cardid,
-        description: document.getElementById(actual_cardid + 'desc').value,
-        due: document.getElementById(actual_cardid + 'due').value,
-        title: document.getElementById(actual_cardid + 'title').value,
+    db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).set({
+        card_id: current_card_id,
+        description: document.getElementById(current_card_id + 'desc').value,
+        due: document.getElementById(current_card_id + 'due').value,
+        title: document.getElementById(current_card_id + 'title').value,
     })
 }
 
 
 
-function disable_card_form(obj, state) {
-    parent_div1 = obj.parentElement;
-    parent_div2 = parent_div1.parentElement;
-    parent_div3 = parent_div2.parentElement;
-    parent_div4 = parent_div3.parentElement;
+function disable_card_form(state) {
+    let current_card_id = sessionStorage.getItem('card_id');
+    console.log(document.getElementById(current_card_id + '2'));
 
-    var card_id = String(parent_div4.children[0].id);
-    var section1 = document.getElementById(card_id);
-    var card_id2 = String(section1.children[0].id);
-    var section2 = document.getElementById(card_id2);
-
-    document.getElementById(section2.id).disabled = state;
+    document.getElementById(current_card_id + '2').disabled = state;
 }
 
 
 function add_card() {
-    if (cards_lists.length > 1) {
-        last_element = cards_lists[cards_lists.length - 1];
-        found_card_number = last_element.match(/.{1,4}/g);
-        new_number = parseInt(found_card_number[1]);
-        new_number = new_number + 1;
-        new_card_id = 'card' + String(new_number);
-        create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', new_card_id);
-        cards_lists.push(new_card_id);
-        user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
+    if (!card_active) {
+        if (cards_lists.length > 1) {
+            last_element = cards_lists[cards_lists.length - 1];
+            found_card_number = last_element.match(/.{1,4}/g);
+            new_number = parseInt(found_card_number[1]);
+            new_number = new_number + 1;
+            new_card_id = 'card' + String(new_number);
+            create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', new_card_id);
+            cards_lists.push(new_card_id);
+            user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
+            collapse_obj(new_card_id, true);
+            disable_card_form(false);
+        } else {
+            cards_lists.push('card1');
+            db.collection('users').doc(cards_lists[0]).collection("cards").doc("card1").set({
+                title: 'Assignment Title',
+                description: 'Assignment Description',
+                due: '11/11/2021',
+                card_id: 'card1'
+            });
+            create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', "card1");
 
-    } else {           
-        cards_lists.push('card1');
-        db.collection('users').doc(cards_lists[0]).collection("cards").doc("card1").set({
-            title: 'Assignment Title',
-            description: 'Assignment Description',
-            due: '11/11/2021',
-            card_id: 'card1'
-        });
-        create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', "card1");
-
-    }   
+        }
+    }
 
 }
 
+function remove_card() {
+    let current_card_id = sessionStorage.getItem('card_id');
+    db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).delete()
+    let card_div = document.getElementById(current_card_id);
+    card_div.remove();
+    card_active = false;
+
+}
 
 function no_cards_exist() {
     if (cards_lists.length == 1) {
@@ -206,3 +233,12 @@ function no_cards_exist() {
 }
 no_cards_exist();
 
+function get_current_day() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+    return today;
+}

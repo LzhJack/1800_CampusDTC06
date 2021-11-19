@@ -44,20 +44,29 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" id="user_name"></a>
+                <a class="navbar-brand" href="#">
+                    <img src="/images/logoimg.png" width="30" height="30" class="d-inline-block align-top" alt="IMinder"
+                        id="user_name">
+
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto mr-1">
-                        <li class="nav-item ml-auto mr-1">
-                            <a class="nav-link" href="" id="log_out" onclick="signOut()">Log out</a>
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/reminders.html">Reminders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="signOut()">Login/Logout</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+    </header>
+
     </header>
     <div class="container">
         <div class="row justify-content-md-center" style="padding-top: 5em;">
@@ -71,7 +80,7 @@
                         <div class="card-body pb-3" id="card_body">
 
                             <!-- Title -->
-                            <form id="content_store" onclick="collapse_obj(this)">
+                            <form id="content_store" onclick="collapse_obj(this, false)">
                                 <fieldset class="mb-3" id="personalInfoFields" disabled>
                                     <div class="form-group">
                                         <input type="text" id="assignment_title" class="form-control"
@@ -94,13 +103,24 @@
                             <div class="collapse-content" id="collapse_content">
 
                                 <div class="collapse" id="collapseExample">
-                                    <div class="d-flex justify-content-end mt-5" id="collapse_div">
-                                        <button type="button" class="btn btn-secondary"
-                                            onclick="disable_card_form(this, false)">Edit</button>
-                                        <span style="width: 10px"></span>
-                                        <button type="button" class="btn btn-info"
-                                            onclick="saveUserInfo(this)">Save</button>
+                                    <div class="d-flex justify-content-end" id="collapse_div">
+
+                                        <div id="HASH" class="blue-msg">
+                                            <div id="left">
+                                                <button type="button" class="btn btn-secondary" id="remove_card"
+                                                    onclick="remove_card()">Remove</button>
+                                            </div>
+                                            <div id="right">
+                                                <button type="button" class="btn btn-secondary"
+                                                    onclick="disable_card_form(false)">Edit</button>
+                                                <button type="button" class="btn btn-info"
+                                                    onclick="saveUserInfo(this)">Save</button>
+                                            </div>
+                                        </div>
+
                                     </div>
+
+
                                 </div>
 
                             </div>
@@ -131,7 +151,6 @@
     <script src="scripts/main.js"></script>
 
     <script>
-
         function select_date() {
             var date_input = $('input[name="date"]'); //our date input has the name "date"
             var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
