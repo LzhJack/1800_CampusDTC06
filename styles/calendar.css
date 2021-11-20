@@ -1,85 +1,126 @@
-.calendar-day {
-    width: 100px;
-    min-width: 100px;
-    max-width: 100px;
-    height: 80px;
+html body {
+  background: #0d0d0dfa
+}
+
+html body .page-hero h3 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: -1px -1px 1px #460000, 2px 2px 1px #05F4B7;
+  text-transform: uppercase;
+  color: #bd122d
+}
+
+html body .page-hero p {
+  color: #05F4B7
+}
+
+html body .card {
+  border-radius: 15px;
+  overflow: hidden
+}
+
+html body .card-header {
+  background: #05F4B7;
+  color: rgb(0, 0, 0)
+}
+
+html body .card-header .prevMonth {
+  cursor: pointer
+}
+
+html body .card-header .nextMonth {
+  cursor: pointer
+}
+
+html body .card-body {  
+  background: #371BB1
+}
+
+html body .card-body .days span {
+  background: #fffffffa;
+  color: rgb(0, 0, 0);
+  border-radius: 50%;
+  display: inline-block;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  cursor: pointer
+}
+
+html body .card-body .days span:hover {
+  background: #fffffffa
+}
+
+html body .card-body .dates span {
+  background: #ffffff;
+  color: #000;
+  border-radius: 50%;
+  display: inline-block;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  cursor: pointer
+}
+
+html body .card-body .dates span.active,
+html body .card-body .dates span:hover {
+  background: #ffeef0;
+  color: #000
+}
+
+html body .card-body .dates span.ntMonth {
+  color: #938e8e;
+  background: #ffd8de
+}
+
+html body .card-body .dates span.ntMonth:hover {
+  background: #ffeef0;
+  color: #000
+}
+
+html body .card#event .card-header .close {
+  color: #fff;
+  opacity: 1
+}
+
+html body .card#event .card-body .events-today {
+  height: 210px;
+  overflow-x: hidden
+}
+
+html body .card#event .card-body .events-input .data-invalid {
+  border-color: red
+}
+
+html body .card#event .card-body .events-input .error {
+  font-size: 12px;
+  color: red;
+  position: absolute;
+  top: 100%
+}
+
+@media(max-width: 767px) {
+  html body .pa-sm {
+    position: absolute
   }
-  .calendar-table {
-    margin: 0 auto;
-    width: 700px;
+
+  html body .card-body .days span {
+    height: 38px;
+    width: 38px;
+    line-height: 38px;
+    font-size: .8rem
   }
-  .selected {
-    background-color: #eee;
+
+  html body .card-body .dates span {
+    height: 38px;
+    width: 38px;
+    line-height: 38px;
+    font-size: .8rem
   }
-  .outside .date {
-    color: #ccc;
+
+  html body .card#event .card-body .events-today {
+    height: 188px
   }
-  .timetitle {
-    white-space: nowrap;
-    text-align: right;
-  }
-  .event {
-    border-top: 1px solid #b2dba1;
-    border-bottom: 1px solid #b2dba1;
-    background-image: linear-gradient(to bottom, #dff0d8 0px, #c8e5bc 100%);
-    background-repeat: repeat-x;
-    color: #3c763d;
-    border-width: 1px;
-    font-size: .75em;
-    padding: 0 .75em;
-    line-height: 2em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 1px;
-  }
-  .event.begin {
-    border-left: 1px solid #b2dba1;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-  }
-  .event.end {
-    border-right: 1px solid #b2dba1;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-  .event.all-day {
-    border-top: 1px solid #9acfea;
-    border-bottom: 1px solid #9acfea;
-    background-image: linear-gradient(to bottom, #d9edf7 0px, #b9def0 100%);
-    background-repeat: repeat-x;
-    color: #31708f;
-    border-width: 1px;
-  }
-  .event.all-day.begin {
-    border-left: 1px solid #9acfea;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-  }
-  .event.all-day.end {
-    border-right: 1px solid #9acfea;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-  .event.clear {
-    background: none;
-    border: 1px solid transparent;
-  }
-  .table-tight > thead > tr > th,
-  .table-tight > tbody > tr > th,
-  .table-tight > tfoot > tr > th,
-  .table-tight > thead > tr > td,
-  .table-tight > tbody > tr > td,
-  .table-tight > tfoot > tr > td {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .table-tight-vert > thead > tr > th,
-  .table-tight-vert > tbody > tr > th,
-  .table-tight-vert > tfoot > tr > th,
-  .table-tight-vert > thead > tr > td,
-  .table-tight-vert > tbody > tr > td,
-  .table-tight-vert > tfoot > tr > td {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+}
+
+/*# sourceMappingURL=style.css.map */
