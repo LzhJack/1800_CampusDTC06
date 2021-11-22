@@ -88,16 +88,6 @@ html body .card#event .card-body .events-today {
   overflow-x: hidden
 }
 
-html body .card#event .card-body .events-input .data-invalid {
-  border-color: red
-}
-
-html body .card#event .card-body .events-input .error {
-  font-size: 12px;
-  color: red;
-  position: absolute;
-  top: 100%
-}
 
 @media(max-width: 767px) {
   html body .pa-sm {

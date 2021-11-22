@@ -16,7 +16,7 @@ function insertName() {
             set_user_name(user);
 
             // This will get all cards the user made and populate it to the page
-            load_cards(user);
+            get_documents(user.uid);
 
 
         } else {
@@ -52,24 +52,26 @@ async function get_documents(user_id) {
         var single_doc = doc.data();
         card_documents.push(single_doc);
     });
-}
+    db.collection('users').doc(user_id).collection('cards').where("archive", "==", false)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                //console.log(doc.id, " => ", doc.data());
+                var single_doc = doc.data();
+                
+                var due_date = single_doc['due']
+                var title = single_doc['title']
+                var description = single_doc['description']
+                var card_id = single_doc['card_id']
 
-async function load_cards(user) {
-    await get_documents(user.uid)
-        .then(function () {
-            card_documents.forEach(function (element) {
-
-                var due_date = element['due']
-                var title = element['title']
-                var description = element['description']
-                var card_id = element['card_id']
-
-                cards_lists.push(card_id);
+                cards_lists.push(card_id)
                 create_card_from_db(title, description, due_date, card_id);
-
-            })
+            });
         })
-
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
 }
 
 
@@ -110,8 +112,7 @@ function change_box_shadow(card_id, due_date, on_load) {
             card.style.boxShadow = "0 5px 20px 3px red";
             card.style.border = "2px solid red";
         }
-    }
-    else if (!on_load) {
+    } else if (!on_load) {
         let current_card_id = sessionStorage.getItem('card_id');
         due_date = document.getElementById(current_card_id + 'due');
         console.log(due_date.value)
@@ -119,8 +120,7 @@ function change_box_shadow(card_id, due_date, on_load) {
             cardcc = document.getElementById(current_card_id);
             cardcc.style.boxShadow = "0 5px 20px 3px red";
             cardcc.style.border = "2px solid red";
-        }
-        else if (due_date.value > get_current_day()) {
+        } else if (due_date.value > get_current_day()) {
             cardcc = document.getElementById(current_card_id);
             cardcc.style.boxShadow = "0 5px 20px 3px #371BB1";
             cardcc.style.border = "2px solid #371BB1";
@@ -131,27 +131,29 @@ function change_box_shadow(card_id, due_date, on_load) {
 var card_active = false;
 
 function collapse_obj(obj, using_card_id) {
-    if (!using_card_id) {
-        let section = document.getElementById(obj.id);
-        let parent_div = section.parentElement;
-        let current_card_id = parent_div.parentElement;
-        sessionStorage.setItem('card_id', current_card_id.id);
+    if (!card_active) {
+        if (!using_card_id) {
+            let section = document.getElementById(obj.id);
+            let parent_div = section.parentElement;
+            let current_card_id = parent_div.parentElement;
+            sessionStorage.setItem('card_id', current_card_id.id);
 
-        let collase_div = document.getElementById(current_card_id.id + '4');
+            let collase_div = document.getElementById(current_card_id.id + '4');
 
-        if (!card_active) {
-            card_active = true;
-            return new bootstrap.Collapse(collase_div)
+            if (!card_active) {
+                card_active = true;
+                return new bootstrap.Collapse(collase_div)
+            }
+        } else {
+            sessionStorage.setItem('card_id', obj);
+            let collase_div = document.getElementById(obj + '4');
+            if (!card_active) {
+                card_active = true;
+                return new bootstrap.Collapse(collase_div)
+            }
         }
     }
-    else {
-        sessionStorage.setItem('card_id', obj);
-        let collase_div = document.getElementById(obj + '4');
-        if (!card_active) {
-            card_active = true;
-            return new bootstrap.Collapse(collase_div)
-        }
-    }
+
 }
 
 
@@ -174,11 +176,13 @@ async function save_new_info() {
     // Save the acutal new infromation
     let current_card_id = sessionStorage.getItem('card_id');
 
+    console.log(db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id));
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).set({
         card_id: current_card_id,
         description: document.getElementById(current_card_id + 'desc').value,
         due: document.getElementById(current_card_id + 'due').value,
         title: document.getElementById(current_card_id + 'title').value,
+        archive: false
     })
 }
 
@@ -211,22 +215,31 @@ function add_card() {
                 title: 'Assignment Title',
                 description: 'Assignment Description',
                 due: '11/11/2021',
-                card_id: 'card1'
+                card_id: 'card1',
+                archive: false
             });
             create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', "card1");
-
+            collapse_obj("card1", true);
+            disable_card_form(false);
         }
     }
 
 }
 
 function remove_card() {
+    //let current_card_id = sessionStorage.getItem('card_id');
+    //db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).delete()
     let current_card_id = sessionStorage.getItem('card_id');
-    db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).delete()
+
+    db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).update({
+        description: document.getElementById(current_card_id + 'desc').value,
+        due: document.getElementById(current_card_id + 'due').value,
+        title: document.getElementById(current_card_id + 'title').value,
+        archive: true
+    })
     let card_div = document.getElementById(current_card_id);
     card_div.remove();
     card_active = false;
-
 }
 
 function no_cards_exist() {
@@ -250,7 +263,7 @@ function get_current_day() {
 function send_to_reminder() {
     let current_card_id = sessionStorage.getItem('card_id');
 
-    var pageContent = document.getElementById(current_card_id +'1').innerHTML;
+    var pageContent = document.getElementById(current_card_id + '1').innerHTML;
     sessionStorage.setItem("page1content", pageContent)
     window.location.assign("./reminders.html");
 
