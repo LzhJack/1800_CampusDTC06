@@ -113,4 +113,6 @@ html body .card#event .card-body .events-today {
   }
 }
 
-/*# sourceMappingURL=style.css.map */
+.table-responsive {
+  overflow-x:initial;
+}

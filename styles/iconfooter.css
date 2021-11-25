@@ -1,6 +1,6 @@
 #containers {
     position: absolute;
-    bottom: 0 auto;
+    bottom: 0px auto;
     width: 100%;
     display:flex;
     /* establish flex container */
