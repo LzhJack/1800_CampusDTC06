@@ -59,7 +59,7 @@ async function get_documents(user_id) {
                 // doc.data() is never undefined for query doc snapshots
                 //console.log(doc.id, " => ", doc.data());
                 var single_doc = doc.data();
-                
+
                 var due_date = single_doc['due']
                 var title = single_doc['title']
                 var description = single_doc['description']
@@ -83,11 +83,11 @@ function create_card_from_db(title, description, due_date, card_id) {
 
     clon.getElementById("assignment_title").value = title;
     clon.getElementById("assignment_description").value = description;
-    clon.getElementById("due_date").value = due_date;
+    clon.getElementById("testdate").value = due_date;
 
     clon.getElementById("assignment_title").placeholder = title;
     clon.getElementById("assignment_description").placeholder = description;
-    clon.getElementById("due_date").placeholder = due_date;
+    clon.getElementById("testdate").placeholder = due_date;
 
     clon.getElementById('assignment_card').id = card_id;
     clon.getElementById('content_store').id = card_id + 1;
@@ -99,10 +99,13 @@ function create_card_from_db(title, description, due_date, card_id) {
     // Set input ids
     clon.getElementById("assignment_title").id = card_id + 'title';
     clon.getElementById("assignment_description").id = card_id + 'desc';
-    clon.getElementById("due_date").id = card_id + 'due';
+    clon.getElementById("testdate").id = card_id + 'due';
 
     document.getElementById('card_container').appendChild(clon);
     change_box_shadow(card_id, due_date, true);
+
+
+
 }
 
 function change_box_shadow(card_id, due_date, on_load) {
@@ -115,7 +118,6 @@ function change_box_shadow(card_id, due_date, on_load) {
     } else if (!on_load) {
         let current_card_id = sessionStorage.getItem('card_id');
         due_date = document.getElementById(current_card_id + 'due');
-        console.log(due_date.value)
         if (due_date.value <= get_current_day()) {
             cardcc = document.getElementById(current_card_id);
             cardcc.style.boxShadow = "0 5px 20px 3px red";
@@ -142,6 +144,20 @@ function collapse_obj(obj, using_card_id) {
 
             if (!card_active) {
                 card_active = true;
+                let current_card_id1 = sessionStorage.getItem('card_id');
+
+                $('#' + current_card_id1 + 'due').on("blur", function () {
+                    var test1 = $('#' + current_card_id1 + 'due').val();
+                    if (test1.trim() == "" || test1 == null) {
+                        if ($(".datepicker").length == 0) {
+                            $('#' + current_card_id1 + 'due').focus();
+                        }
+                    }
+                })
+                $('#' + current_card_id1 + 'due').datepicker({
+                    autoclose: true,
+                });
+
                 return new bootstrap.Collapse(collase_div)
             }
         } else {
@@ -149,9 +165,27 @@ function collapse_obj(obj, using_card_id) {
             let collase_div = document.getElementById(obj + '4');
             if (!card_active) {
                 card_active = true;
+                let current_card_id1 = sessionStorage.getItem('card_id');
+
+                $('#' + current_card_id1 + 'due').on("blur", function () {
+                    var test1 = $('#' + current_card_id1 + 'due').val();
+                    if (test1.trim() == "" || test1 == null) {
+                        if ($(".datepicker").length == 0) {
+                            $('#' + current_card_id1 + 'due').focus();
+                        }
+                    }
+                })
+                $('#' + current_card_id1 + 'due').datepicker({
+                    autoclose: true,
+                });
+
                 return new bootstrap.Collapse(collase_div)
             }
         }
+
+
+
+
     }
 
 }
@@ -176,7 +210,6 @@ async function save_new_info() {
     // Save the acutal new infromation
     let current_card_id = sessionStorage.getItem('card_id');
 
-    console.log(db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id));
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).set({
         card_id: current_card_id,
         description: document.getElementById(current_card_id + 'desc').value,
@@ -190,7 +223,6 @@ async function save_new_info() {
 
 function disable_card_form(state) {
     let current_card_id = sessionStorage.getItem('card_id');
-    console.log(document.getElementById(current_card_id + '2'));
 
     document.getElementById(current_card_id + '2').disabled = state;
 }
@@ -265,7 +297,10 @@ function send_to_reminder() {
 
     var pageContent = document.getElementById(current_card_id + '1').innerHTML;
     sessionStorage.setItem("page1content", pageContent)
-    window.location.assign("./reminders.html");
+    save_new_info()
+        .then(function () {
+            window.location.assign("./reminders.html");
+        });
 
 
 

@@ -75,66 +75,8 @@ let year = c_date.getFullYear();
     document.getElementById('app').innerHTML = calendar;
 })()
 
-function renderCalendar(m, y) {
-    //Month's first weekday
-    let firstDay = new Date(y, m, 1).getDay();
-    //Days in Month
-    let d_m = new Date(y, m + 1, 0).getDate();
-    //Days in Previous Month
-    let d_pm = new Date(y, m, 0).getDate();
+var generate_cal = false;
 
-
-    let table = document.getElementById('dates');
-    table.innerHTML = '';
-    let s_m = document.getElementById('s_m');
-    s_m.innerHTML = months[m] + ' ' + y;
-    let date = 1;
-    //remaing dates of last month
-    let r_pm = (d_pm - firstDay) + 1;
-    for (let i = 0; i < 6; i++) {
-        let row = document.createElement('tr');
-        for (let j = 0; j < 7; j++) {
-            if (i === 0 && j < firstDay) {
-                let cell = document.createElement('td');
-                let span = document.createElement('span');
-                let cellText = document.createTextNode(r_pm);
-                span.classList.add('ntMonth');
-                span.classList.add('prevMonth');
-                cell.appendChild(span).appendChild(cellText);
-                row.appendChild(cell);
-                r_pm++;
-            } else if (date > d_m && j < 7) {
-                if (j !== 0) {
-                    let i = 0;
-                    for (let k = j; k < 7; k++) {
-                        i++
-                        let cell = document.createElement('td');
-                        let span = document.createElement('span');
-                        let cellText = document.createTextNode(i);
-                        span.classList.add('ntMonth');
-                        span.classList.add('nextMonth');
-                        cell.appendChild(span).appendChild(cellText);
-                        row.appendChild(cell);
-                    };
-                }
-                break;
-            } else {
-                let cell = document.createElement('td');
-                let span = document.createElement('span');
-                let cellText = document.createTextNode(date);
-                span.classList.add('showEvent');
-                if (date === c_date.getDate() && y === c_date.getFullYear() && m === c_date.getMonth()) {
-                    span.classList.add('bg-danger');
-                }
-                cell.appendChild(span).appendChild(cellText);
-                row.appendChild(cell);
-                date++;
-            }
-        }
-        table.appendChild(row);
-    }
-}
-renderCalendar(month, year)
 function get_user() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
@@ -154,14 +96,17 @@ function get_user() {
 get_user();
 
 var card_documents = [];
-
+var due_month_and_day = [];
 async function get_documents(user_id) {
+    console.log('load')
+
     const snapshot = await db.collection('users').doc(user_id).collection('cards').get()
     snapshot.docs.map(doc => {
         var single_doc = doc.data();
         card_documents.push(single_doc);
     });
 }
+
 
 async function get_documents_form_db(user) {
     await get_documents(user.uid)
@@ -170,22 +115,21 @@ async function get_documents_form_db(user) {
 
                 var due_date = element['due']
                 var title = element['title']
-                var description = element['description']
-                var card_id = element['card_id']
+                let new_string = due_date.split("/");
+                var mm1 = new_string[0] - 1
 
+                due_month_and_day.push(new_string[1] + mm1.toString());
                 create_event(title, due_date);
 
             })
+            console.log(due_month_and_day);
+            generate_cal = true;
         })
 
 }
 
-function create_event(title, due_date) {
-    console.log(title);
-    console.log(due_date);
+async function create_event(title, due_date) {
     let new_string = due_date.split("/");
-    console.log(new_string);
-    console.log(new_string[1] + (new_string[0] - 1) + new_string[2]);
     due_date = new_string[1] + (new_string[0] - 1) + new_string[2];
 
     let events = localStorage.getItem('events');
@@ -226,6 +170,86 @@ function create_event(title, due_date) {
         localStorage.setItem('events', JSON.stringify(obj));
     }
 }
+
+function renderCalendar(m, y) {
+    if (generate_cal) {
+        //Month's first weekday
+        let firstDay = new Date(y, m, 1).getDay();
+        //Days in Month
+        let d_m = new Date(y, m + 1, 0).getDate();
+        //Days in Previous Month
+        let d_pm = new Date(y, m, 0).getDate();
+
+
+        let table = document.getElementById('dates');
+        table.innerHTML = '';
+        let s_m = document.getElementById('s_m');
+        s_m.innerHTML = months[m] + ' ' + y;
+        let date = 1;
+        //remaing dates of last month
+        let r_pm = (d_pm - firstDay) + 1;
+        // i is the row
+        for (let i = 0; i < 6; i++) {
+            let row = document.createElement('tr');
+            // j is the day in week 
+            for (let j = 0; j < 7; j++) {
+                if (i === 0 && j < firstDay) {
+                    let cell = document.createElement('td');
+                    let span = document.createElement('span');
+                    let cellText = document.createTextNode(r_pm);
+                    span.classList.add('ntMonth');
+                    span.classList.add('prevMonth');
+                    cell.appendChild(span).appendChild(cellText);
+                    row.appendChild(cell);
+                    r_pm++;
+                } else if (date > d_m && j < 7) {
+                    if (j !== 0) {
+                        let i = 0;
+                        for (let k = j; k < 7; k++) {
+                            i++
+                            let cell = document.createElement('td');
+                            let span = document.createElement('span');
+                            let cellText = document.createTextNode(i);
+                            span.classList.add('ntMonth');
+                            span.classList.add('nextMonth');
+                            cell.appendChild(span).appendChild(cellText);
+                            row.appendChild(cell);
+                        };
+                    }
+                    break;
+                } else {
+                    let cell = document.createElement('td');
+                    let span = document.createElement('span');
+                    let cellText = document.createTextNode(date);
+                    let current_day_month = m.toString() + date.toString();
+
+                    span.classList.add('showEvent');
+                    if (date === c_date.getDate() && y === c_date.getFullYear() && m === c_date.getMonth()) {
+                        span.classList.add('bg-danger');
+                    }
+                    due_month_and_day.forEach(a => {
+                        if (current_day_month == a) {
+                            console.log(current_day_month);
+
+                            span.classList.add('bg-danger');
+                        }
+                    })
+                    
+                    cell.appendChild(span).appendChild(cellText);
+                    row.appendChild(cell);
+                    date++;
+                }
+            }
+            table.appendChild(row);
+        }
+    }
+
+}
+renderCalendar(month, year)
+
+
+
+
 function remove_local_storage() {
     localStorage.removeItem('events');
 
