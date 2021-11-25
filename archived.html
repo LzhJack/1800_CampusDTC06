@@ -34,7 +34,35 @@
     <link rel="stylesheet" href="styles/main.css">
 
     <script src="scripts/archived.js"></script>
+    <link rel="stylesheet" href="./styles/iconfooter.css">
+    <style>
+        #containers {
+            position: absolute;
+            bottom: 0px ;
+            width: 100%;
+            display: flex;
+            /* establish flex container */
+            flex-direction: row;
+            /* default value; can be omitted */
+            flex-wrap: nowrap;
+            /* default value; can be omitted */
+            justify-content: space-between;
+            /* switched from default (flex-start, see below) */
+            background-color: rgb(119, 119, 119);
 
+
+        }
+
+        #containers>div {
+            width: 100px;
+            height: 100px;
+        }
+
+        #containers div>a {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
     <title>IMinder</title>
 </head>
 
@@ -139,5 +167,11 @@
 
     </div>
 </body>
-
+<footer class="footer">
+    <div id="containers">
+        <div><a href="./archived.html"><img src="./images/archive.svg"></a></div>
+        <div><a href="./main.html"><img src="./images/card-list.svg"></i></a></div>
+        <div><a href="./calendar.html"><img src="./images/calendar-event.svg"></i></a></div>
+    </div>
+</footer>
 </html>
