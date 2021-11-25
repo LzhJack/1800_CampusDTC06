@@ -24,6 +24,8 @@ textarea {
 
 button {
   border: none;
+  height:80px;
+  width:100px
 }
 
 .assignment_card {
@@ -43,9 +45,17 @@ button {
   margin-top: 2em;
   
 }
+.btn.btn-info{
+  height:50px;
+}
+
+.btn.btn-secondary{
+  height:50px;
+}
 
 #remove_card {
   background-color: red;
+  height:50px;
 }
 
 .assignment_card {
