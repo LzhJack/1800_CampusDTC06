@@ -1,8 +1,8 @@
 #containers {
     position: absolute;
-    bottom: 0px auto;
+    bottom: 0 ;
     width: 100%;
-    display: flex;
+    display:flex;
     /* establish flex container */
     flex-direction: row;
     /* default value; can be omitted */
@@ -11,13 +11,17 @@
     justify-content: space-between;
     /* switched from default (flex-start, see below) */
     background-color: rgb(119, 119, 119);
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5px;
+    padding-bottom: 5px;
 
 
 }
 
 #containers>div {
     width: 100px;
-    height: 100px;
+    height: 80px;
 }
 
 #containers div a img {
