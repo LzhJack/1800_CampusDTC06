@@ -20,7 +20,7 @@ html body .card {
 }
 
 html body .card-header {
-  background: #05F4B7;
+  background: lightgray;
   color: rgb(0, 0, 0)
 }
 
@@ -33,7 +33,7 @@ html body .card-header .nextMonth {
 }
 
 html body .card-body {  
-  background: #371BB1
+  background: white
 }
 
 html body .card-body .days span {

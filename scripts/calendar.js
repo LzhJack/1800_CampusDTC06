@@ -12,6 +12,17 @@ let year = c_date.getFullYear();
 (function App() {
 
     const calendar = `<div class="container">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <div class="row">
                 <div class="col-sm-6 col-12 d-flex">
                     <div class="card border-0 mt-5 flex-fill">
