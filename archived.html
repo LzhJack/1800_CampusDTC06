@@ -33,7 +33,8 @@
 
     <link rel="stylesheet" href="styles/main.css">
 
-    <script src="scripts/main.js"></script>
+    <script src="scripts/archived.js"></script>
+
     <title>IMinder</title>
 </head>
 
@@ -107,16 +108,13 @@
                                         <div id="HASH" class="blue-msg">
                                             <div id="left">
                                                 <button type="button" class="btn btn-secondary" id="remove_card"
-                                                    onclick="remove_card()">Archive</button>
+                                                    onclick="delete_card()">Delete</button>
                                             </div>
                                             <div id="right">
-                                                <button type="button" class="btn btn-secondary"
-                                                    onclick="send_to_reminder()"><i class="fa fa-bell"
-                                                        aria-hidden="true"></i></button>
-                                                <button type="button" class="btn btn-secondary"
-                                                    onclick="disable_card_form(false)">Edit</button>
+                                                <button type="button" class="btn btn-secondary" id="remove_card"
+                                                    onclick="un_archive()" style="margin-right: 1.5em;">Un-Archive</button>
                                                 <button type="button" class="btn btn-info"
-                                                    onclick="saveUserInfo(this)">Save</button>
+                                                    onclick="collapse_obj(this, true)">Save</button>
                                             </div>
                                         </div>
 
@@ -136,48 +134,10 @@
                 <div id="error_messages"></div>
             </div>
 
-            <footer class="w-100 py-4 flex-shrink-0">
-                <button type="button" class="btn btn-default" aria-label="Left Align" onclick="add_card()">
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                </button>
-            </footer>
         </div>
 
 
     </div>
-    <script>
-        function open_cal() {
-            let current_card_id = sessionStorage.getItem('card_id');
-
-            $('#' + current_card_id + 'due').click(function () {
-                $('#' + current_card_id + 'due').on("blur", function () {
-                    var test1 = $('#' + current_card_id + 'due').val();
-                    if (test1.trim() == "" || test1 == null) {
-                        if ($(".datepicker").length == 0) {
-                            $('#' + current_card_id + 'due').focus();
-                        }
-                    }
-                })
-                $('#' + current_card_id + 'due').datepicker({
-                    autoclose: true,
-                });
-            })
-            $('#' + current_card_id + 'due').on("blur", function () {
-                var test1 = $('#' + current_card_id + 'due').val();
-                if (test1.trim() == "" || test1 == null) {
-                    if ($(".datepicker").length == 0) {
-                        $('#' + current_card_id + 'due').focus();
-                    }
-                }
-            })
-            $('#' + current_card_id + 'due').datepicker({
-                autoclose: true,
-            });
-
-        }
-
-
-    </script>
 </body>
 
 </html>

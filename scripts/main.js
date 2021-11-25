@@ -5,6 +5,7 @@ function signOut() {
 
 // Keep to store all cards and user uid 
 var cards_lists = [];
+var not_saved_yet = false;
 
 function insertName() {
     firebase.auth().onAuthStateChanged(user => {
@@ -209,21 +210,27 @@ async function saveUserInfo() {
 async function save_new_info() {
     // Save the acutal new infromation
     let current_card_id = sessionStorage.getItem('card_id');
-
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).set({
-        card_id: current_card_id,
-        description: document.getElementById(current_card_id + 'desc').value,
-        due: document.getElementById(current_card_id + 'due').value,
-        title: document.getElementById(current_card_id + 'title').value,
-        archive: false
-    })
+            card_id: current_card_id,
+            description: document.getElementById(current_card_id + 'desc').value,
+            due: document.getElementById(current_card_id + 'due').value,
+            title: document.getElementById(current_card_id + 'title').value,
+            archive: false
+        })
+        .then(function () {
+            if (send_to_reminder_bool) {
+                not_saved_yet = false;
+                send_to_reminder()
+            }
+        })
+
 }
 
 
 
 function disable_card_form(state) {
     let current_card_id = sessionStorage.getItem('card_id');
-
+    not_saved_yet = true;
     document.getElementById(current_card_id + '2').disabled = state;
 }
 
@@ -293,15 +300,19 @@ function get_current_day() {
 }
 
 function send_to_reminder() {
+    send_to_reminder_bool = true;
     let current_card_id = sessionStorage.getItem('card_id');
 
     var pageContent = document.getElementById(current_card_id + '1').innerHTML;
     sessionStorage.setItem("page1content", pageContent)
-    save_new_info()
-        .then(function () {
-            window.location.assign("./reminders.html");
-        });
+    if (not_saved_yet) {
+        console.log('da')
+        $('.toast-body').html('You have not saved yet');
+        $('.toast').toast('show');
 
+    } else {
+        window.location.assign("./reminders.html");
+    }
 
 
 }
