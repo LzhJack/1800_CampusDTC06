@@ -62,13 +62,13 @@
 
         .col-25 {
             float: left;
-            width: 30%;
+            width: 25%;
             margin-top: 5px;
         }
 
         .col-75 {
             float: left;
-            width: 70%;
+            width: 65%;
             margin-top: 5px;
         }
 
@@ -116,6 +116,12 @@
         .icon-active {
             background-color: #0d6efd;
             /* Add an active/current color */
+        }
+        div.form-check{
+            padding: 0px 30px 0px;
+        }
+        label.form-check-label{
+            padding:0px 0px 5px;
         }
 
         /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
@@ -216,6 +222,25 @@
             <div class="row">
                 <input type="submit" value="Submit">
             </div>
+            <br>
+            <form>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          Email Notifications
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          General Notifications
+                        </label>
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
         </form>
 
 
@@ -227,7 +252,9 @@
 <footer class="footer">
     <div id="containers">
         <div><a href="#"><img src="./images/archive.svg"></a></div>
+        <div class="line_1"></div>
         <div><a href="#"><img src="./images/card-list.svg"></a></div>
+        <div class="line_2"></div>
         <div><a href="#"><img src="./images/calendar-event.svg"></a></div>
     </div>
 </footer>

@@ -1,6 +1,6 @@
 #containers {
     position: absolute;
-    bottom: 0 ;
+    bottom: 0;
     width: 100%;
     display:flex;
     /* establish flex container */
@@ -8,23 +8,35 @@
     /* default value; can be omitted */
     flex-wrap: nowrap;
     /* default value; can be omitted */
-    justify-content: space-between;
+    justify-content:space-between;
     /* switched from default (flex-start, see below) */
     background-color: rgb(119, 119, 119);
     padding-left: 10%;
     padding-right: 10%;
-    padding-top: 5px;
-    padding-bottom: 5px;
 
 
 }
 
 #containers>div {
-    width: 100px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
 }
 
 #containers div a img {
-    width: 70px;
-    height: 70px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 65px;
+    height: 65px;
+}
+
+div.line_1{
+    border-left: 5px solid black;
+    position:absolute;
+    left:30%;
+}
+
+div.line_2{
+    border-right: 5px solid black;
+    position:absolute;
+    right:30%;
 }
