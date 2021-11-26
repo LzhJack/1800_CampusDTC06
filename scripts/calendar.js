@@ -12,9 +12,9 @@ let year = c_date.getFullYear();
 (function App() {
 
     const calendar = `<div class="container">
-            <br>
-            <br>
-            <br>
+            
+            <h1 style="color: white; text-align: center; padding-top: 2em; margin-bottom: 0px;">Your Current Calendar</h1>
+
             <div class="row">
                 <div class="col-sm-6 col-12 d-flex">
                     <div class="card border-0 mt-5 flex-fill">
@@ -80,76 +80,76 @@ let year = c_date.getFullYear();
 
 
 function renderCalendar(m, y) {
-        //Month's first weekday
-        let firstDay = new Date(y, m, 1).getDay();
-        //Days in Month
-        let d_m = new Date(y, m + 1, 0).getDate();
-        //Days in Previous Month
-        let d_pm = new Date(y, m, 0).getDate();
+    //Month's first weekday
+    let firstDay = new Date(y, m, 1).getDay();
+    //Days in Month
+    let d_m = new Date(y, m + 1, 0).getDate();
+    //Days in Previous Month
+    let d_pm = new Date(y, m, 0).getDate();
 
 
-        let table = document.getElementById('dates');
-        table.innerHTML = '';
-        let s_m = document.getElementById('s_m');
-        s_m.innerHTML = months[m] + ' ' + y;
-        let date = 1;
-        //remaing dates of last month
-        let r_pm = (d_pm - firstDay) + 1;
-        // i is the row
-        for (let i = 0; i < 6; i++) {
-            let row = document.createElement('tr');
-            // j is the day in week 
-            for (let j = 0; j < 7; j++) {
-                if (i === 0 && j < firstDay) {
-                    let cell = document.createElement('td');
-                    let span = document.createElement('span');
-                    let cellText = document.createTextNode(r_pm);
-                    span.classList.add('ntMonth');
-                    span.classList.add('prevMonth');
-                    cell.appendChild(span).appendChild(cellText);
-                    row.appendChild(cell);
-                    r_pm++;
-                } else if (date > d_m && j < 7) {
-                    if (j !== 0) {
-                        let i = 0;
-                        for (let k = j; k < 7; k++) {
-                            i++
-                            let cell = document.createElement('td');
-                            let span = document.createElement('span');
-                            let cellText = document.createTextNode(i);
-                            span.classList.add('ntMonth');
-                            span.classList.add('nextMonth');
-                            cell.appendChild(span).appendChild(cellText);
-                            row.appendChild(cell);
-                        };
-                    }
-                    break;
-                } else {
-                    let cell = document.createElement('td');
-                    let span = document.createElement('span');
-                    let cellText = document.createTextNode(date);
-                    let current_day_month = m.toString() + date.toString();
-
-                    span.classList.add('showEvent');
-                    if (date === c_date.getDate() && y === c_date.getFullYear() && m === c_date.getMonth()) {
-                        span.classList.add('bg-primary');
-                    }
-                    let intrestdate = JSON.parse(localStorage.getItem('events_to_set1'))
-                    intrestdate.forEach(a => {
-                        if (current_day_month == a) {
-                            span.classList.add('bg-danger');
-
-                        }
-                    })
-                    
-                    cell.appendChild(span).appendChild(cellText);
-                    row.appendChild(cell);
-                    date++;
+    let table = document.getElementById('dates');
+    table.innerHTML = '';
+    let s_m = document.getElementById('s_m');
+    s_m.innerHTML = months[m] + ' ' + y;
+    let date = 1;
+    //remaing dates of last month
+    let r_pm = (d_pm - firstDay) + 1;
+    // i is the row
+    for (let i = 0; i < 6; i++) {
+        let row = document.createElement('tr');
+        // j is the day in week 
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDay) {
+                let cell = document.createElement('td');
+                let span = document.createElement('span');
+                let cellText = document.createTextNode(r_pm);
+                span.classList.add('ntMonth');
+                span.classList.add('prevMonth');
+                cell.appendChild(span).appendChild(cellText);
+                row.appendChild(cell);
+                r_pm++;
+            } else if (date > d_m && j < 7) {
+                if (j !== 0) {
+                    let i = 0;
+                    for (let k = j; k < 7; k++) {
+                        i++
+                        let cell = document.createElement('td');
+                        let span = document.createElement('span');
+                        let cellText = document.createTextNode(i);
+                        span.classList.add('ntMonth');
+                        span.classList.add('nextMonth');
+                        cell.appendChild(span).appendChild(cellText);
+                        row.appendChild(cell);
+                    };
                 }
+                break;
+            } else {
+                let cell = document.createElement('td');
+                let span = document.createElement('span');
+                let cellText = document.createTextNode(date);
+                let current_day_month = m.toString() + date.toString();
+
+                span.classList.add('showEvent');
+                if (date === c_date.getDate() && y === c_date.getFullYear() && m === c_date.getMonth()) {
+                    span.classList.add('bg-primary');
+                }
+                let intrestdate = JSON.parse(localStorage.getItem('events_to_set1'))
+                intrestdate.forEach(a => {
+                    if (current_day_month == a) {
+                        span.classList.add('bg-danger');
+
+                    }
+                })
+
+                cell.appendChild(span).appendChild(cellText);
+                row.appendChild(cell);
+                date++;
             }
-            table.appendChild(row);
         }
-    
+        table.appendChild(row);
+    }
+
 
 }
 renderCalendar(month, year)
