@@ -76,4 +76,9 @@ button:not([id="date_button"]) {
   cursor: pointer;
 }
 
-nav{}
+.btn.btn-default{
+  width:30px;
+  height:30px;
+  padding-right: 25px;
+  border: 0;
+}
