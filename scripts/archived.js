@@ -73,6 +73,10 @@ async function get_documents(user_id) {
         .catch((error) => {
             console.log("Error getting documents: ", error);
         });
+    if (cards_lists == 0) {
+        console.log('none');
+    }
+    console.log(cards_lists);
 }
 
 
