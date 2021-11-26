@@ -293,12 +293,10 @@ async function save_new_info() {
     due_month_and_day = [];
     events_to_make = []
     let current_card_id = sessionStorage.getItem('card_id');
-    await db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).set({
-        card_id: current_card_id,
+    await db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).update({
         description: document.getElementById(current_card_id + 'desc').value,
         due: document.getElementById(current_card_id + 'due').value,
-        title: document.getElementById(current_card_id + 'title').value,
-        archive: false
+        title: document.getElementById(current_card_id + 'title').value
     })
     
 
@@ -325,6 +323,13 @@ function add_card() {
             cards_lists.push(new_card_id);
             user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
             collapse_obj(new_card_id, true);
+            db.collection("users").doc(cards_lists[0]).collection("cards").doc(new_card_id).set({
+                card_id: new_card_id,
+                description: '',
+                due: '',
+                title: '',
+                archive: false
+            })
             disable_card_form(false);
         } else {
             cards_lists.push('card1');

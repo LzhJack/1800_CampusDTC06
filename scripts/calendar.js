@@ -40,9 +40,9 @@ let year = c_date.getFullYear();
                     </div>
                 </div>
                 <div class="col-sm-6 col-12 d-flex pa-sm">
-                    <div class="card border-0 mt-5 flex-fill d-none" id="event">
-                        <div class="card-header py-3 text-center">
-                            Add Event
+                    <div class="card border-0 mt-5 flex-fill d-none" id="event" style="height: 385px;">
+                        <div class="card-header py-3 text-center" >
+                            Current Events
                             <button type="button" class="close hide">
                                 <span aria-hidden="true">&times;</span>
                             </button>

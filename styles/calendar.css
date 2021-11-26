@@ -13,6 +13,9 @@ html body .page-hero h3 {
 html body .page-hero p {
   color: #05F4B7
 }
+.table-responsive {
+  overflow-x:initial;
+}
 
 html body .card {
   border-radius: 15px;
@@ -113,6 +116,3 @@ html body .card#event .card-body .events-today {
   }
 }
 
-.table-responsive {
-  overflow-x:initial;
-}
