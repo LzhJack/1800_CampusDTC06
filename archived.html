@@ -35,6 +35,11 @@
 
     <script src="scripts/archived.js"></script>
     <link rel="stylesheet" href="./styles/iconfooter.css">
+    <style>
+        #containers {
+            bottom: 0px;
+        }
+    </style>
     <title>IMinder</title>
 </head>
 
@@ -67,9 +72,9 @@
     </header>
     <div class="container">
         <div class="row justify-content-md-center" style="padding-top: 5em;">
-
             <div id="card_container">
-                <!-- Pre made empty card -->
+            <h1 style="text-align: center;">Archived Cards</h1>
+            <!-- Pre made empty card -->
                 <template>
                     <div class="assignment_card" id="assignment_card">
 
@@ -112,9 +117,10 @@
                                             </div>
                                             <div id="right">
                                                 <button type="button" class="btn btn-secondary" id="remove_card"
-                                                    onclick="un_archive()" style="margin-right: 1.5em;">Un-Archive</button>
-                                                <button type="button" class="btn btn-info"
-                                                    onclick="collapse_obj(this, true)">Save</button>
+                                                    onclick="un_archive()"
+                                                    style="margin-right: 0.5em;">Un-Archive</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    onclick="collapse_obj(this, true)">Close</button>
                                             </div>
                                         </div>
 
@@ -148,4 +154,5 @@
         <div><a href="#"><img src="./images/calendar-event.svg"></a></div>
     </div>
 </footer>
+
 </html>

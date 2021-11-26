@@ -46,7 +46,6 @@ function set_user_name(user) {
 var user_card_list = [];
 var card_documents = [];
 var current_highest_card = 0;
-
 async function get_documents(user_id) {
     const snapshot = await db.collection('users').doc(user_id).collection('cards').get()
     snapshot.docs.map(doc => {
@@ -76,6 +75,83 @@ async function get_documents(user_id) {
 }
 
 
+var generate_cal = false;
+
+function get_user() {
+    firebase.auth().onAuthStateChanged(user => {
+        // Check if user is signed in:
+        if (user) {
+            localStorage.removeItem('events');
+            // This will get all cards the user made and populate it to the page
+            get_documents2(user.uid);
+
+
+        } else {
+            // No user is signed in.
+            window.location.assign("login.html");
+        }
+    });
+}
+
+get_user();
+
+var card_documents2 = [];
+var due_month_and_day = [];
+var events_to_make = []
+
+async function get_documents2(user_id) {
+
+    db.collection('users').doc(user_id).collection('cards').where("archive", "==", false)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var single_doc = doc.data();
+                card_documents2.push(single_doc);
+                var due_date = single_doc['due'];
+                var title = single_doc['title'];
+                let new_string = due_date.split("/");
+
+                var mm1 = new_string[0] - 1;
+                var new_date = mm1.toString() + new_string[1]
+                var new_date2 = new_string[1] + mm1.toString() + new_string[2];
+
+                if (new_date2[0] == '0') {
+                    new_date2 = new_date2.substring(1)
+                }
+                if (new_date[2] == '0') {
+                    new_date = new_date.split('');
+
+                    new_date.splice(2, 1);
+                    new_date = new_date.join('');
+                }
+                due_month_and_day.push(new_date);
+
+
+
+                let events = localStorage.getItem('events');
+                if (events) {
+                    events_to_make = JSON.parse(events);
+                }
+                let eventText = title
+
+                let id = 1;
+                if (events_to_make.length > 0) {
+                    id = Math.max.apply('', events_to_make.map(function (entry) {
+                        return parseFloat(entry.id);
+                    })) + 1;
+                } else {
+                    id = 1;
+                }
+                events_to_make.push({
+                    'id': id,
+                    'eventDate': new_date2,
+                    'eventText': eventText
+                });
+                localStorage.setItem('events', JSON.stringify(events_to_make));
+                localStorage.setItem("events_to_set1", JSON.stringify(due_month_and_day));
+            })
+        })
+}
 
 function create_card_from_db(title, description, due_date, card_id) {
 
@@ -159,7 +235,7 @@ function collapse_obj(obj, using_card_id) {
                     autoclose: true,
                 });
 
-                return new bootstrap.Collapse(collase_div)
+                return new bootstrap.Collapse(collase_div);
             }
         } else {
             sessionStorage.setItem('card_id', obj);
@@ -180,7 +256,7 @@ function collapse_obj(obj, using_card_id) {
                     autoclose: true,
                 });
 
-                return new bootstrap.Collapse(collase_div)
+                return new bootstrap.Collapse(collase_div);
             }
         }
 
@@ -200,29 +276,31 @@ async function saveUserInfo() {
 
     await save_new_info()
     if (card_active) {
+
+        get_documents2(cards_lists[0]);
         sessionStorage.removeItem('card_id');
         card_active = false;
-        return new bootstrap.Collapse(collapsable)
+        return new bootstrap.Collapse(collapsable);
     }
 }
 
 
 async function save_new_info() {
     // Save the acutal new infromation
+    localStorage.removeItem('events_to_set1');
+    localStorage.removeItem('events');
+    card_documents2 = [];
+    due_month_and_day = [];
+    events_to_make = []
     let current_card_id = sessionStorage.getItem('card_id');
-    db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).set({
-            card_id: current_card_id,
-            description: document.getElementById(current_card_id + 'desc').value,
-            due: document.getElementById(current_card_id + 'due').value,
-            title: document.getElementById(current_card_id + 'title').value,
-            archive: false
-        })
-        .then(function () {
-            if (send_to_reminder_bool) {
-                not_saved_yet = false;
-                send_to_reminder()
-            }
-        })
+    await db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).set({
+        card_id: current_card_id,
+        description: document.getElementById(current_card_id + 'desc').value,
+        due: document.getElementById(current_card_id + 'due').value,
+        title: document.getElementById(current_card_id + 'title').value,
+        archive: false
+    })
+    
 
 }
 

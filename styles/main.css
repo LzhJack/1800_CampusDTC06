@@ -22,12 +22,9 @@ textarea {
   max-height: 200px;
 }
 
-button {
+button:not([id="date_button"]) {
   border: none;
-  height:80px;
-  width:100px
 }
-
 .assignment_card {
   
   background-color: white;

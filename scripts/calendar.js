@@ -15,14 +15,6 @@ let year = c_date.getFullYear();
             <br>
             <br>
             <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
             <div class="row">
                 <div class="col-sm-6 col-12 d-flex">
                     <div class="card border-0 mt-5 flex-fill">
@@ -86,104 +78,8 @@ let year = c_date.getFullYear();
     document.getElementById('app').innerHTML = calendar;
 })()
 
-var generate_cal = false;
-
-function get_user() {
-    firebase.auth().onAuthStateChanged(user => {
-        // Check if user is signed in:
-        if (user) {
-            localStorage.removeItem('events');
-            // This will get all cards the user made and populate it to the page
-            get_documents_form_db(user);
-
-
-        } else {
-            // No user is signed in.
-            window.location.assign("login.html");
-        }
-    });
-}
-
-get_user();
-
-var card_documents = [];
-var due_month_and_day = [];
-async function get_documents(user_id) {
-    console.log('load')
-
-    const snapshot = await db.collection('users').doc(user_id).collection('cards').get()
-    snapshot.docs.map(doc => {
-        var single_doc = doc.data();
-        card_documents.push(single_doc);
-    });
-}
-
-
-async function get_documents_form_db(user) {
-    await get_documents(user.uid)
-        .then(function () {
-            card_documents.forEach(function (element) {
-
-                var due_date = element['due']
-                var title = element['title']
-                let new_string = due_date.split("/");
-                var mm1 = new_string[0] - 1
-
-                due_month_and_day.push(new_string[1] + mm1.toString());
-                create_event(title, due_date);
-
-            })
-            console.log(due_month_and_day);
-            generate_cal = true;
-        })
-
-}
-
-async function create_event(title, due_date) {
-    let new_string = due_date.split("/");
-    due_date = new_string[1] + (new_string[0] - 1) + new_string[2];
-
-    let events = localStorage.getItem('events');
-    let obj = [];
-    if (events) {
-        obj = JSON.parse(events);
-    }
-    let eventDate = due_date
-    let eventText = title
-    let valid = false;
-    $('#eventTxt').removeClass('data-invalid');
-    $('.error').remove();
-    if (eventText == '') {
-        $('.events-input').append(`<span class="error">Please enter event</span>`);
-        $('#eventTxt').addClass('data-invalid');
-        $('#eventTxt').trigger('focus');
-    } else if (eventText.length < 3) {
-        $('#eventTxt').addClass('data-invalid');
-        $('#eventTxt').trigger('focus');
-        $('.events-input').append(`<span class="error">please enter at least three characters</span>`);
-    } else {
-        valid = true;
-    }
-    if (valid) {
-        let id = 1;
-        if (obj.length > 0) {
-            id = Math.max.apply('', obj.map(function (entry) {
-                return parseFloat(entry.id);
-            })) + 1;
-        } else {
-            id = 1;
-        }
-        obj.push({
-            'id': id,
-            'eventDate': eventDate,
-            'eventText': eventText
-        });
-        localStorage.setItem('events', JSON.stringify(obj));
-    }
-}
 
 function renderCalendar(m, y) {
-    if (generate_cal) {
         //Month's first weekday
         let firstDay = new Date(y, m, 1).getDay();
         //Days in Month
@@ -236,13 +132,13 @@ function renderCalendar(m, y) {
 
                     span.classList.add('showEvent');
                     if (date === c_date.getDate() && y === c_date.getFullYear() && m === c_date.getMonth()) {
-                        span.classList.add('bg-danger');
+                        span.classList.add('bg-primary');
                     }
-                    due_month_and_day.forEach(a => {
+                    let intrestdate = JSON.parse(localStorage.getItem('events_to_set1'))
+                    intrestdate.forEach(a => {
                         if (current_day_month == a) {
-                            console.log(current_day_month);
-
                             span.classList.add('bg-danger');
+
                         }
                     })
                     
@@ -253,7 +149,7 @@ function renderCalendar(m, y) {
             }
             table.appendChild(row);
         }
-    }
+    
 
 }
 renderCalendar(month, year)
@@ -322,51 +218,9 @@ $(function () {
         $('.event-date').html(todaysDate).data('eventdate', eventDate);
         $('.event-day').html(eventDay);
         showEvent(eventDate);
+        console.log(eventDate)
     })
     $(document).on('click', '.hide', function () {
         $('#event').addClass('d-none');
     })
-    //$(document).on('click', '#createEvent', function () {
-    //    let events = localStorage.getItem('events');
-    //    let obj = [];
-    //    if (events) {
-    //        obj = JSON.parse(events);
-    //    }
-    //    let eventDate = $('.event-date').data('eventdate');
-    //    let eventText = $('#eventTxt').val();
-    //    let valid = false;
-    //    $('#eventTxt').removeClass('data-invalid');
-    //    $('.error').remove();
-    //    if (eventText == '') {
-    //        $('.events-input').append(`<span class="error">Please enter event</span>`);
-    //        $('#eventTxt').addClass('data-invalid');
-    //        $('#eventTxt').trigger('focus');
-    //    } else if (eventText.length < 3) {
-    //        $('#eventTxt').addClass('data-invalid');
-    //        $('#eventTxt').trigger('focus');
-    //        $('.events-input').append(`<span class="error">please enter at least three characters</span>`);
-    //    } else {
-    //        valid = true;
-    //    }
-    //    if (valid) {
-    //        let id = 1;
-    //        if (obj.length > 0) {
-    //            id = Math.max.apply('', obj.map(function (entry) {
-    //                return parseFloat(entry.id);
-    //            })) + 1;
-    //        } else {
-    //            id = 1;
-    //        }
-    //        obj.push({
-    //            'id': id,
-    //            'eventDate': eventDate,
-    //            'eventText': eventText
-    //        });
-    //        localStorage.setItem('events', JSON.stringify(obj));
-    //        $('#eventTxt').val('');
-    //        $('.toast-body').html('Your event have been added');
-    //        $('.toast').toast('show');
-    //        showEvent(eventDate);
-    //    }
-    //})
 })
