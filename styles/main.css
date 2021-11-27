@@ -5,11 +5,8 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
-  background-color: #0d0d0dfa;
-  color: white;
-
+  background-color: white;
 }
-
 a {
   color: #92badd;
   display: inline-block;
@@ -81,5 +78,6 @@ button:not([id="date_button"]) {
   height:30px;
   padding-right: 25px;
   border: 0;
+  outline: auto;
 }
 
