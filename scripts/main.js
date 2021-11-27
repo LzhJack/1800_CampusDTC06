@@ -331,6 +331,7 @@ function add_card() {
                 archive: false
             })
             disable_card_form(false);
+            document.getElementById(new_card_id).scrollIntoView();
         } else {
             cards_lists.push('card1');
             db.collection('users').doc(cards_lists[0]).collection("cards").doc("card1").set({
@@ -343,6 +344,8 @@ function add_card() {
             create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', "card1");
             collapse_obj("card1", true);
             disable_card_form(false);
+            document.getElementById('card1').scrollIntoView();
+
         }
     }
 
