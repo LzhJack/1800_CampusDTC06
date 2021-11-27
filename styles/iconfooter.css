@@ -1,43 +1,33 @@
-#containers {
-    margin-top: 2em;
-    position: absolute;
-    bottom: 0 auto;
+
+/*Buttom Navigation Settings */
+.nav-buttom {
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    display:flex;
-    /* establish flex container */
-    flex-direction: row;
-    /* default value; can be omitted */
-    flex-wrap: nowrap;
-    /* default value; can be omitted */
-    justify-content:space-between;
-    /* switched from default (flex-start, see below) */
-    background-color: rgb(119, 119, 119);
-    padding-left: 10%;
-    padding-right: 10%;
-
-
+    height: 55px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    background-color: #949292;
+    display: flex;
+    overflow-x: auto;
 }
 
-#containers>div {
-    width: 65px;
-    height: 65px;
+.nav__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    min-width: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: #444;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.1s ease-in-out;
 }
 
-#containers div a img {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 65px;
-    height: 65px;
-}
-
-div.line_1{
-    border-left: 5px solid black;
-    position:absolute;
-    left:30%;
-}
-
-div.line_2{
-    border-right: 5px solid black;
-    position:absolute;
-    right:30%;
+.nav__link:hover {
+    background-color: #eeeeee;
 }
