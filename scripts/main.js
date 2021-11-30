@@ -319,15 +319,15 @@ function add_card() {
             new_number = parseInt(found_card_number[1]);
             new_number = new_number + 1;
             new_card_id = 'card' + String(new_number);
-            create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', new_card_id);
+            create_card_from_db('Assignment Title', 'Assignment Description', '11/29/2021', new_card_id);
             cards_lists.push(new_card_id);
             user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
             collapse_obj(new_card_id, true);
             db.collection("users").doc(cards_lists[0]).collection("cards").doc(new_card_id).set({
                 card_id: new_card_id,
-                description: '',
-                due: '',
-                title: '',
+                description: 'Assignment Description',
+                due: '11/29/2021',
+                title: 'Assignment Title',
                 archive: false
             })
             disable_card_form(false);
@@ -337,7 +337,7 @@ function add_card() {
             db.collection('users').doc(cards_lists[0]).collection("cards").doc("card1").set({
                 title: 'Assignment Title',
                 description: 'Assignment Description',
-                due: '11/11/2021',
+                due: '11/29/2021',
                 card_id: 'card1',
                 archive: false
             });
