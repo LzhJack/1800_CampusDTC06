@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+}
+
+input[type=text],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+label {
+    padding: 10px 10px 10px 0;
+    display: inline-block;
+    text-align: center;
+}
+
+input[type=submit] {
+    background-color: #0d6efd;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #0d6efd;
+}
+
+.container {
+    border-radius: 4px;
+    background-color: #f2f2f2;
+
+}
+
+h2 {
+    text-align: center;
+    margin-top: 6px;
+    padding: 0px;
+}
+
+p {
+    text-align: center;
+    margin-top: 6px;
+    padding: 0px;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 5px;
+}
+
+.col-75 {
+    float: left;
+    width: 65%;
+    margin-top: 5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.icon-bar {
+    position: fixed;
+    height: 40px;
+    bottom: 0;
+    width: 100%;
+    /* Full-width */
+    background-color: #555;
+    /* Dark-grey background */
+    overflow: auto;
+    /* Overflow due to float */
+}
+
+.icon-bar a {
+    float: left;
+    /* Float links side by side */
+    text-align: center;
+    /* Center-align text */
+    width: 20%;
+    /* Equal width (5 icons with 20% width each = 100%) */
+    padding: 40px 0;
+    /* Some top and bottom padding */
+    transition: all 0.3s ease;
+    /* Add transition for hover effects */
+    color: white;
+    /* White text color */
+    font-size: 36px;
+    /* Increased font size */
+}
+
+.icon-bar a:hover {
+    background-color: #000;
+    /* Add a hover color */
+}
+
+.icon-active {
+    background-color: #0d6efd;
+    /* Add an active/current color */
+}
+
+div.form-check {
+    padding: 0px 30px 0px;
+}
+
+label.form-check-label {
+    padding: 0px 0px 5px;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+
+    .col-25,
+    .col-75,
+    input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+
+body,
+header,
+div {
+    overflow-x: hidden;
+    /* Hide scrollbars */
+}
