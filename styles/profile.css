@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+body{
+    font-family: 'Oswald', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
 input[type=text],
 select,
 textarea {
@@ -38,7 +43,7 @@ input[type=submit]:hover {
 
 }
 
-h2 {
+h1 {
     text-align: center;
     margin-top: 6px;
     padding: 0px;

@@ -44,7 +44,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/html/main.html">
                 <img src="/images/logoimg.png" width="30" height="30" class="d-inline-block align-top" alt="IMinder"
                     id="user_name">
             </a>
@@ -75,15 +75,15 @@
     <div class="row justify-content-md-center" style="padding-top: 5em;">
     </div>
 </div>
-<h2>Profile Settings</h2>
-<p id="display_user_name">Hello</p>
+<h1>Profile Settings</h1>
+<p style="font-size:x-large;" id="display_user_name">Hello</p>
 
 <body>
     <div class="container">
         <form action="/action_page.php">
             <div class="row">
                 <div class="col-25">
-                    <label for="fname">Change Your Name</label>
+                    <label for="fname" style="font-size: larger;">Change Your Name</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="fname" name="firstname" placeholder="Enter new name...">
@@ -91,7 +91,7 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="cemail">Change Your Notification Email</label>
+                    <label for="cemail" style="font-size: larger;">Change Your Notification Email</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="cemail" name="lastname" placeholder="Notification Email...">
@@ -99,7 +99,7 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="cphone">Change Phone Number</label>
+                    <label for="cphone" style="font-size: larger;">Change Phone Number</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="cphone" name="lastname" placeholder="Enter Your Number">
@@ -115,7 +115,7 @@
             </div>
             <br>
             <div class="text-center">
-                <input type="button" value="Save" onclick="save_data()">
+                <input type="button" style="font-size: larger;" value="Save" onclick="save_data()">
             </div>
         </form>
     </div>

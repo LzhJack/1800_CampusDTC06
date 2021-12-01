@@ -46,7 +46,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/html/main.html">
                     <img src="/images/logoimg.png" width="30" height="30" class="d-inline-block align-top" alt="IMinder"
                         id="user_name">
                 </a>
@@ -57,16 +57,19 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./profile.html">Profile</a>
+                            <a class="nav-link" aria-current="page" href="./profile.html"
+                                style="font-size: large;">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./archived.html">Archived Cards</a>
+                            <a class="nav-link" aria-current="page" href="./archived.html"
+                                style="font-size: large;">Archived Cards</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./calendar.html">Calendar</a>
+                            <a class="nav-link" aria-current="page" href="./calendar.html"
+                                style="font-size: large;">Calendar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" onclick="signOut()">Logout</a>
+                            <a class="nav-link" onclick="signOut()" style="font-size: large;">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -89,11 +92,12 @@
                                 <fieldset class="mb-3" id="personalInfoFields" disabled>
                                     <div class="form-group">
                                         <input type="text" id="assignment_title" class="form-control"
-                                            placeholder="Assignment Title" maxlength="50">
+                                            style="font-size: large;" placeholder="Assignment Title" maxlength="50">
                                     </div>
                                     <div class="form-group" style="padding-top: 2em;">
                                         <textarea type="text-area" id="assignment_description" class="form-control"
-                                            placeholder="Assignment Description" rows="4" maxlength="500"></textarea>
+                                            style="font-size: large;" placeholder="Assignment Description" rows="4"
+                                            maxlength="500"></textarea>
                                     </div>
                                     <div class="d-flex justify-content-md-center" style="padding-top: 1em;">
                                         <button disabled id="date_button">
@@ -101,7 +105,7 @@
                                                 onclick="open_cal()"></span>
                                         </button>
                                         <input type="text" class="form-control" runat="server" id="testdate"
-                                            required="required" onclick="open_cal()" />
+                                            style="font-size: large;" required="required" onclick="open_cal()" />
                                     </div>
                                 </fieldset>
                             </form>

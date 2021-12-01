@@ -35,7 +35,7 @@ html body .card-header .nextMonth {
   cursor: pointer
 }
 
-html body .card-body {  
+html body .card-body {
   background: white
 }
 
@@ -115,4 +115,3 @@ html body .card#event .card-body .events-today {
     height: 188px
   }
 }
-

@@ -3,7 +3,8 @@ html {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Oswald', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   height: 100vh;
   background-color: #0d0d0dfa;
 }
@@ -66,7 +67,7 @@ button {
 input[type=button],
 #login_button,
 input[type=reset] {
-  background-color: #05F4B7;
+  background-color: #057;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -113,6 +114,5 @@ input[type=password]  {
 }
 
 #login_button {
-  background-color: #05F4B7;
+  background-color: skyblue;
 }
-
