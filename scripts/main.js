@@ -298,7 +298,6 @@ async function save_new_info() {
         due: document.getElementById(current_card_id + 'due').value,
         title: document.getElementById(current_card_id + 'title').value
     })
-    
 
 }
 
@@ -319,29 +318,51 @@ function add_card() {
             new_number = parseInt(found_card_number[1]);
             new_number = new_number + 1;
             new_card_id = 'card' + String(new_number);
-            create_card_from_db('Assignment Title', 'Assignment Description', '11/29/2021', new_card_id);
-            cards_lists.push(new_card_id);
-            user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
-            collapse_obj(new_card_id, true);
-            db.collection("users").doc(cards_lists[0]).collection("cards").doc(new_card_id).set({
-                card_id: new_card_id,
-                description: 'Assignment Description',
-                due: '11/29/2021',
-                title: 'Assignment Title',
-                archive: false
-            })
-            disable_card_form(false);
-            document.getElementById(new_card_id).scrollIntoView();
+            if (cards_lists.includes(new_card_id)) {
+                console.log('has');
+                new_number += 1;
+                new_card_id = 'card' + String(new_number);
+                create_card_from_db('Assignment Title', 'Assignment Description', '12/03/2021', new_card_id);
+                cards_lists.push(new_card_id);
+                user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
+                collapse_obj(new_card_id, true);
+                db.collection("users").doc(cards_lists[0]).collection("cards").doc(new_card_id).set({
+                    card_id: new_card_id,
+                    description: 'Assignment Description',
+                    due: '12/03/2021',
+                    title: 'Assignment Title',
+                    archive: false
+                })
+                disable_card_form(false);
+                window.scrollTo(0,document.body.scrollHeight);
+            } else {
+                console.log('new');
+                create_card_from_db('Assignment Title', 'Assignment Description', '12/03/2021', new_card_id);
+                cards_lists.push(new_card_id);
+                user_card_list[0] = user_card_list[0] + ' ' + new_card_id;
+                collapse_obj(new_card_id, true);
+                db.collection("users").doc(cards_lists[0]).collection("cards").doc(new_card_id).set({
+                    card_id: new_card_id,
+                    description: 'Assignment Description',
+                    due: '12/03/2021',
+                    title: 'Assignment Title',
+                    archive: false
+                })
+                disable_card_form(false);
+                window.scrollTo(0,document.body.scrollHeight);
+
+            }
+
         } else {
             cards_lists.push('card1');
             db.collection('users').doc(cards_lists[0]).collection("cards").doc("card1").set({
                 title: 'Assignment Title',
                 description: 'Assignment Description',
-                due: '11/29/2021',
+                due: '12/03/2021',
                 card_id: 'card1',
                 archive: false
             });
-            create_card_from_db('Assignment Title', 'Assignment Description', '11/11/2021', "card1");
+            create_card_from_db('Assignment Title', 'Assignment Description', '12/03/2021', "card1");
             collapse_obj("card1", true);
             disable_card_form(false);
             document.getElementById('card1').scrollIntoView();
@@ -352,8 +373,12 @@ function add_card() {
 }
 
 function remove_card() {
-    //let current_card_id = sessionStorage.getItem('card_id');
-    //db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).delete()
+    
+    localStorage.removeItem('events_to_set1');
+    localStorage.removeItem('events');
+    card_documents2 = [];
+    due_month_and_day = [];
+    events_to_make = []
     let current_card_id = sessionStorage.getItem('card_id');
 
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).update({
@@ -365,6 +390,9 @@ function remove_card() {
     let card_div = document.getElementById(current_card_id);
     card_div.remove();
     card_active = false;
+    get_documents2(cards_lists[0]);
+    document.getElementById(current_card_id).remove();
+    
 }
 
 function no_cards_exist() {
