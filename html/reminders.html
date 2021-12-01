@@ -20,6 +20,11 @@
     <link rel="stylesheet" href="/styles/iconfooter.css">
     <!-- Google Icons (Material Design)-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Roboto+Condensed:wght@400;700&display=swap"
+        rel="stylesheet">
     <!-- Firebase 8 CDNs-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
@@ -69,7 +74,7 @@
         </nav>
     </header>
     <div class="px-4 py-5 my-5 text-center">
-        <h1 class="display-5 fw-bold">Reminders:</h1>
+        <h1 class="display-5 fw-bold">Reminders</h1>
     </div>
     <div class="container">
         <div class="row justify-content-md-center">
@@ -78,7 +83,7 @@
                 <div class="assignment_card" id="assignment_card"
                     style="box-shadow: 0 5px 20px 3px #87b438; border: 2px solid #87b438;">
                     <!-- Card content -->
-                    <div class="card-body pb-3" id="card_body">
+                    <div class="card-body pb-1" id="card_body">
                         <!-- Title -->
                         <form id="content_store" onclick="collapse_obj(this, false)">
                             <fieldset class="mb-3" id="personalInfoFields" disabled>
@@ -101,7 +106,7 @@
                 </div>
                 <form style="margin-top: 2em;">
                     <div class="row">
-                        <label for="notification_times">How many times would you like to be notified?</label>
+                        <label for="notification_times" style="font-size:large">How many times would you like to be notified?</label>
 
                         <div class="col-25">
                         </div>
@@ -111,7 +116,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label for="notification_date">What day would you like to be notified?</label>
+                        <label for="notification_date" style="font-size:large">What day would you like to be notified?</label>
                         <div class="d-flex justify-content-md-center" style="padding-top: 1em;">
 
                             <button disabled id="date_button">

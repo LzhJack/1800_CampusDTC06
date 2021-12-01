@@ -3,7 +3,8 @@ html {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+font-family: 'Oswald', sans-serif;
+font-family: 'Roboto Condensed', sans-serif;
   height: 100vh;
   background-color: white;
 }
@@ -23,7 +24,7 @@ button:not([id="date_button"]) {
   border: none;
 }
 .assignment_card {
-  
+
   background-color: white;
   border-radius: 10px 10px 10px 10px;
 }
@@ -37,7 +38,7 @@ button:not([id="date_button"]) {
 
 .assignment_card {
   margin-top: 2em;
-  
+
 }
 .btn.btn-info{
   height:50px;
@@ -80,4 +81,3 @@ button:not([id="date_button"]) {
   border: 0;
   outline: auto;
 }
-
