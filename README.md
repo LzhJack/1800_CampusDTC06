@@ -15,33 +15,72 @@ Technologies used for this project:
 * HTML, CSS
 * JavaScript
 * Bootstrap 
-* ...
+* Firebase
 	
 ## Content
 Content of the project folder:
 
 ```
  Top level of project folder: 
+├── .firebaserc
 ├── .gitignore               # Git ignore file
-├── index.html               # landing HTML file, this is what users see when you come to url
+├── index.html               # Landing page of the website
+├── firebase.json
+├── firestore.indexes.json
+├── firestore.rules
 └── README.md
 
 It has the following subfolders and files:
 ├── .git                     # Folder for git repo
+
+├── html                     # Folder for html
+    /404.html                   # 
+    /archived.css               # 
+    /calendar.css.map           # 
+    /login.css                  # 
+    /main.css                   # 
+    /profile.css                #  
+    /reminders.css              # 
+
 ├── images                   # Folder for images
-    /blah.jpg                # 
+    /archive.svg                # 
+    /baricon.png                # 
+    /baricon2.png               # 
+    /baricon3.png               # 
+    /calendar-event.svg         # 
+    /calendar.jpeg              # 
+    /card-list.svg              # 
+    /indexintro.jpeg            # 
+    /indexpic.jpeg              # 
+    /indexpic2.jpeg             # 
+    /indexpic3.jpeg             # 
+    /indexpic4.jpeg             # 
+    /indexpic5.jpeg             # 
+    /indexpic6.jpeg             # 
+    /indexpic7.jpeg             # 
+    /logoimg.png                # 
+    /signupimg.jpeg             # 
+    /todolist.jpeg              # 
+    /writing.jpg                # 
+
 ├── scripts                  # Folder for scripts
-    /blah.js                 # 
+    /archived.js                # 
+    /bootstrap.bundle.min.js    # 
+    /calendar.js                # 
+    /main.js                    # 
+    /profile.js                 # 
+    /reminder.js                # 
+
 ├── styles                   # Folder for styles
-    /blah.css                # 
+    /bootstrap.min.css          # 
+    /calendar.css               # 
+    /calendar.css.map           # 
+    /carousel.css               # 
+    /date_picker.css            # 
+    /iconfooter.css             # 
+    /login.css                  # 
+    /main.css                   # 
+    /profile.css                # 
 
-Firebase hosting files: 
-├── .firebaserc...
-
-
-```
-
-Tips for file naming files and folders:
-* use lowercase with no spaces
-* use dashes (not underscore) for word separation
-
+├── scss                     # Folder for scss
+    /style.scss                 # 
