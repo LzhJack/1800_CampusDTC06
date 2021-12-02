@@ -15,6 +15,9 @@
  var creating_account = false;
 
  function create_signUp() {
+     /**
+      * This function Changes the text if the user clicks on the sign up link
+      */
      var sign_up_button = document.getElementById("sign_up");
      var log_in_button = document.getElementById("login_button");
      var user_name_input = document.getElementById("user_name")
@@ -40,6 +43,9 @@
 
 
  function authentificate_button() {
+     /**
+      * This function authenticates the user or creates the user if they sign up
+      */
      var current_option = login_button.value
 
      if (current_option == 'Sign Up') {
@@ -80,7 +86,3 @@
          
      }
  }
-
-function create_card_collection() {
-    
-}

@@ -1,23 +1,41 @@
+// Global variables 
+var cards_lists = [];
+var not_saved_yet = false;
+var generate_cal = false;
+var card_documents2 = [];
+var due_month_and_day = [];
+var events_to_make = []
+var user_card_list = [];
+var card_documents = [];
+var current_highest_card = 0;
+
 function signOut() {
+    /**
+     * This function signs the user out
+     */
     auth.signOut();
     alert("Sign Out Successfully from System");
 }
 
-// Keep to store all cards and user uid 
-var cards_lists = [];
-var not_saved_yet = false;
 
-function insertName() {
+
+function get_user_login_status() {
+    /**
+     * This function checks if the user is logged in and if they are it creates the cards saved in their collection
+     * In case the user is not logged in then it will re-direct to the login page
+     */
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
             // Do something for the current logged-in user here: 
             cards_lists.push(user.uid);
-            // This function will set the users name, i.e. Welcome Urjit
-            set_user_name(user);
 
             // This will get all cards the user made and populate it to the page
             get_documents(user.uid);
+
+            localStorage.removeItem('events');
+            // This will get all cards the user made and populate it to the page
+            get_documents2(user.uid);
 
 
         } else {
@@ -27,26 +45,15 @@ function insertName() {
     });
 }
 
-insertName();
-
-function set_user_name(user) {
-    //go to the correct user document by referencing to the user uid
-    currentUser = db.collection("users").doc(user.uid);
-    //get the document for current user.
-    currentUser.get()
-        .then(userDoc => {
-            var user_Name = userDoc.data().name;
-            // display name 
-            $("#user_name").text('Welcome ' + user_Name);
-        })
-}
+get_user_login_status();
 
 
-// Keep
-var user_card_list = [];
-var card_documents = [];
-var current_highest_card = 0;
+
 async function get_documents(user_id) {
+    /**
+     * This function gets all the documents within the users card collection 
+     * This also queries for unarchived cards to display on the main page CRUD
+     */
     const snapshot = await db.collection('users').doc(user_id).collection('cards').get()
     snapshot.docs.map(doc => {
         var single_doc = doc.data();
@@ -75,31 +82,13 @@ async function get_documents(user_id) {
 }
 
 
-var generate_cal = false;
 
-function get_user() {
-    firebase.auth().onAuthStateChanged(user => {
-        // Check if user is signed in:
-        if (user) {
-            localStorage.removeItem('events');
-            // This will get all cards the user made and populate it to the page
-            get_documents2(user.uid);
-
-
-        } else {
-            // No user is signed in.
-            window.location.assign("login.html");
-        }
-    });
-}
-
-get_user();
-
-var card_documents2 = [];
-var due_month_and_day = [];
-var events_to_make = []
 
 async function get_documents2(user_id) {
+    /**
+     * This function is responsible for grabbing and making all the events for the calendar page
+     * It queries for un-archived cards, does some string manipulation and saves to localstorage CRUD
+     */
 
     db.collection('users').doc(user_id).collection('cards').where("archive", "==", false)
         .get()
@@ -154,7 +143,9 @@ async function get_documents2(user_id) {
 }
 
 function create_card_from_db(title, description, due_date, card_id) {
-
+    /**
+     * This function takes all the data from the users database and puts it in a template
+     */
     var temp = document.getElementsByTagName("template")[0];
     var clon = temp.content.cloneNode(true);
 
@@ -185,7 +176,11 @@ function create_card_from_db(title, description, due_date, card_id) {
 
 }
 
-function change_box_shadow(card_id, due_date, on_load) {
+function change_box_shadow(card_id, due_date, on_load) { 
+    /**
+     * This function sets the box and shadow color of each card according to its due date
+     * Red for overdue/current day, Blue for any other day
+     */
     if (on_load) {
         if (due_date <= get_current_day()) {
             card = document.getElementById(card_id);
@@ -210,6 +205,10 @@ function change_box_shadow(card_id, due_date, on_load) {
 var card_active = false;
 
 function collapse_obj(obj, using_card_id) {
+    /**
+     * This function will un-collapse the card selected 
+     * It also goes to the parent and stores the card id to session storage
+     */
     if (!card_active) {
         if (!using_card_id) {
             let section = document.getElementById(obj.id);
@@ -269,6 +268,9 @@ function collapse_obj(obj, using_card_id) {
 
 
 async function saveUserInfo() {
+    /**
+     * This function disables the card form and closes the card
+     */
     disable_card_form(true);
     change_box_shadow('', '', false);
     let current_card_id = sessionStorage.getItem('card_id');
@@ -286,6 +288,9 @@ async function saveUserInfo() {
 
 
 async function save_new_info() {
+    /**
+     * This function goes to the users database and updates it with the new information CRUD
+     */
     // Save the acutal new infromation
     localStorage.removeItem('events_to_set1');
     localStorage.removeItem('events');
@@ -304,6 +309,9 @@ async function save_new_info() {
 
 
 function disable_card_form(state) {
+    /**
+     * This function disables or un-disables the current selected card
+     */
     let current_card_id = sessionStorage.getItem('card_id');
     not_saved_yet = true;
     document.getElementById(current_card_id + '2').disabled = state;
@@ -311,6 +319,12 @@ function disable_card_form(state) {
 
 
 function add_card() {
+    /**
+     * This function adds new cards to the database and page
+     * It does some string manipulation to find the next available card id
+     * It also opens and makes the card editable
+     * Create part of CRUD
+     */
     if (!card_active) {
         if (cards_lists.length > 1) {
             last_element = cards_lists[cards_lists.length - 1];
@@ -373,6 +387,10 @@ function add_card() {
 }
 
 function remove_card() {
+    /**
+     * This function removes the card from the page
+     * It also updates the database and sets the archived boolean to true
+     */
     
     localStorage.removeItem('events_to_set1');
     localStorage.removeItem('events');
@@ -396,7 +414,10 @@ function remove_card() {
 }
 
 function no_cards_exist() {
-    if (cards_lists.length == 1) {
+    /**
+     * This function shows if no cards exist in the database of the user
+     */
+    if (cards_lists.length == 0) {
         console.log(cards_lists);
         document.getElementById("error_messages").innerHTML = 'You currently have no cards saved';
     }
@@ -404,6 +425,10 @@ function no_cards_exist() {
 no_cards_exist();
 
 function get_current_day() {
+    /**
+     * This function gets the current day 
+     * It is used by the change_box_shadow function 
+     */
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -414,6 +439,9 @@ function get_current_day() {
 }
 
 function send_to_reminder() {
+    /**
+     * This function saves the card to session storage and sends the user to the Reminders page
+     */
     send_to_reminder_bool = true;
     let current_card_id = sessionStorage.getItem('card_id');
 

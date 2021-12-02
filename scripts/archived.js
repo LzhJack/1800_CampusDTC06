@@ -1,20 +1,29 @@
 function signOut() {
+    /**
+     * This function signs the user out
+     */
     auth.signOut();
     alert("Sign Out Successfully from System");
 }
 
-// Keep to store all cards and user uid 
+// Global Variables
 var cards_lists = [];
 var not_saved_yet = false;
+var user_card_list = [];
+var card_documents = [];
+var current_highest_card = 0;
+var card_active = false;
 
-function insertName() {
+function get_user_login_status() {
+    /**
+     * This function checks if the user is logged in and if they are it creates the cards saved in their collection
+     * In case the user is not logged in then it will re-direct to the login page
+     */
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
             // Do something for the current logged-in user here: 
             cards_lists.push(user.uid);
-            // This function will set the users name, i.e. Welcome Urjit
-            set_user_name(user);
 
             // This will get all cards the user made and populate it to the page
             get_documents(user.uid);
@@ -27,27 +36,15 @@ function insertName() {
     });
 }
 
-insertName();
-
-function set_user_name(user) {
-    //go to the correct user document by referencing to the user uid
-    currentUser = db.collection("users").doc(user.uid);
-    //get the document for current user.
-    currentUser.get()
-        .then(userDoc => {
-            var user_Name = userDoc.data().name;
-            // display name 
-            $("#user_name").text('Welcome ' + user_Name);
-        })
-}
+get_user_login_status();
 
 
-// Keep
-var user_card_list = [];
-var card_documents = [];
-var current_highest_card = 0;
+
 
 async function get_documents(user_id) {
+    /**
+     * This function queries for all the archived cards in the users card collection 
+     */
     const snapshot = await db.collection('users').doc(user_id).collection('cards').get()
     snapshot.docs.map(doc => {
         var single_doc = doc.data();
@@ -78,6 +75,9 @@ async function get_documents(user_id) {
 
 
 function create_card_from_db(title, description, due_date, card_id) {
+    /**
+     * This function is responsible for creating all the cards on the page
+     */
 
     var temp = document.getElementsByTagName("template")[0];
     var clon = temp.content.cloneNode(true);
@@ -109,9 +109,11 @@ function create_card_from_db(title, description, due_date, card_id) {
 }
 
 
-var card_active = false;
 
 function collapse_obj(obj, using_card_id) {
+    /**
+     * This function collapses the current selected card
+     */
     if (!card_active) {
         if (!using_card_id) {
             let section = document.getElementById(obj.id);
@@ -148,6 +150,9 @@ function collapse_obj(obj, using_card_id) {
 
 
 function delete_card() {
+    /**
+     * This function deletes the card from the page and from the database CRUD
+     */
     let current_card_id = sessionStorage.getItem('card_id');
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).delete()
     let card_div = document.getElementById(current_card_id);
@@ -156,8 +161,9 @@ function delete_card() {
 }
 
 function un_archive() {
-    //let current_card_id = sessionStorage.getItem('card_id');
-    //db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).delete()
+    /**
+     * This function un-archives the current selected card and removes it from the page
+     */
     let current_card_id = sessionStorage.getItem('card_id');
 
     db.collection("users").doc(cards_lists[0]).collection("cards").doc(current_card_id).update({
@@ -170,11 +176,3 @@ function un_archive() {
     card_div.remove();
     card_active = false;
 }
-
-function no_cards_exist() {
-    if (cards_lists.length == 1) {
-        console.log(cards_lists);
-        document.getElementById("error_messages").innerHTML = 'You currently have no cards saved';
-    }
-}
-no_cards_exist();

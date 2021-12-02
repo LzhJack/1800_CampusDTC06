@@ -1,6 +1,6 @@
 'use strict';
 
-//Public Globals
+//Global Variables
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday'];
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -80,6 +80,9 @@ let year = c_date.getFullYear();
 
 
 function renderCalendar(m, y) {
+    /**
+     * This function creates all the rows and columns of the calendar 
+     */
     //Month's first weekday
     let firstDay = new Date(y, m, 1).getDay();
     //Days in Month
@@ -158,11 +161,17 @@ renderCalendar(month, year)
 
 
 function remove_local_storage() {
+    /**
+     * This function just clears the local storage
+     */
     localStorage.removeItem('events');
 
 }
 $(function () {
     function showEvent(eventDate) {
+        /**
+         * This function shows the events when the date is clicked by getting the information from the local storage
+         */
         let storedEvents = JSON.parse(localStorage.getItem('events'));
         if (storedEvents == null) {
             $('.events-today').html('<h5 class="text-center">No events found</h5 class="text-center">');
@@ -184,6 +193,9 @@ $(function () {
     }
 
     function removeEvent(id) {
+        /**
+         * This function removes the event from the calendar page, NOT from the db or anywhere else
+         */
         let storedEvents = JSON.parse(localStorage.getItem('events'));
         if (storedEvents != null) {
             storedEvents = storedEvents.filter(ev => ev.id != id);
@@ -193,22 +205,34 @@ $(function () {
         }
     }
     $(document).on('click', '.remove-event', function () {
+        /**
+         * This deals with clicking on the x button
+         */
         let eventId = $(this).data('event-id');
         removeEvent(eventId);
     })
 
     $(document).on('click', '.prevMonth', function () {
+        /**
+         * This deals with loading the last month 
+         */
         year = (month === 0) ? year - 1 : year;
         month = (month === 0) ? 11 : month - 1;
         renderCalendar(month, year);
     })
     $(document).on('click', '.nextMonth', function () {
+        /**
+         * This deals with loading the next month
+         */
         year = (month === 11) ? year + 1 : year;
         month = (month + 1) % 12;
         renderCalendar(month, year);
     })
 
     $(document).on('click', '.showEvent', function () {
+        /**
+         * This deals with the click on a date to show the events
+         */
         $('.showEvent').removeClass('active');
         $('#event').removeClass('d-none');
         $(this).addClass('active');
@@ -221,6 +245,9 @@ $(function () {
         console.log(eventDate)
     })
     $(document).on('click', '.hide', function () {
+        /**
+         * This function hides the event
+         */
         $('#event').addClass('d-none');
     })
 })
