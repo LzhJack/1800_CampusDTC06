@@ -31,3 +31,7 @@
 .nav__link:hover {
     background-color: #eeeeee;
 }
+
+a.nav-link {
+    font-size: 18px;
+  }

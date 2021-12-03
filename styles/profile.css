@@ -138,3 +138,7 @@ div {
     overflow-x: hidden;
     /* Hide scrollbars */
 }
+
+a.nav-link {
+    font-size: 18px;
+  }

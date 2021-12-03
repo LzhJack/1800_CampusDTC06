@@ -349,6 +349,10 @@
     color: #fff;
 }
 
+a.nav-link {
+    font-size: 18px;
+  }
+
 /*  Larger Screen Styling */
 @media (min-width: 564px) {
     .daterangepicker {

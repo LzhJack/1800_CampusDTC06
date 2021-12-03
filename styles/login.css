@@ -116,3 +116,7 @@ input[type=password]  {
 #login_button {
   background-color: skyblue;
 }
+
+a.nav-link {
+  font-size: 18px;
+}

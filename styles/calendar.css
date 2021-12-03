@@ -115,3 +115,7 @@ html body .card#event .card-body .events-today {
     height: 188px
   }
 }
+
+a.nav-link {
+  font-size: 18px;
+}
