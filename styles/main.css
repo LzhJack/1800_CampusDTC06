@@ -3,8 +3,8 @@ html {
 }
 
 body {
-font-family: 'Oswald', sans-serif;
-font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Oswald', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   height: 100vh;
   background-color: white;
 }
@@ -80,4 +80,8 @@ button:not([id="date_button"]) {
   padding-right: 25px;
   border: 0;
   outline: auto;
+}
+
+a.nav-link {
+  font-size: 18px;
 }

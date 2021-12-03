@@ -6,6 +6,8 @@ body {
   padding-top: 3rem;
   padding-bottom: 3rem;
   color: #5a5a5a;
+  font-family: 'Oswald', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 .bd-placeholder-img {
@@ -14,6 +16,10 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
+
+a.nav-link {
+  font-size: 18px;
 }
 
 @media (min-width: 768px) {
