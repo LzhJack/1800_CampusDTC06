@@ -14,6 +14,9 @@ function get_user_login_status() {
             currentUser.get()
                 .then(userDoc => {
                     document.getElementById('display_user_name').innerText = "Hello " + userDoc.data().name;
+                    document.getElementById('fname').placeholder = "Current Name:  " + userDoc.data().name;
+                    document.getElementById('cemail').placeholder = "Current Email:  " + userDoc.data().notification_email;
+                    document.getElementById('cphone').placeholder = "Current Number:  " + userDoc.data().phone_number;
                 })
         } else {
             window.location.assign("login.html");
@@ -31,7 +34,7 @@ function save_data() {
         name: document.getElementById('fname').value,
         notification_email: document.getElementById('cemail').value,
         phone_number: document.getElementById('cphone').value,
-        notification_state: document.getElementById('flexRadioDefault2').value,
+        notification_state: document.getElementById('flexRadioDefault2').checked,
     })
-    insertName()
+    get_user_login_status()
 }

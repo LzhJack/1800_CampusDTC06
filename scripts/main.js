@@ -413,17 +413,6 @@ function remove_card() {
     
 }
 
-function no_cards_exist() {
-    /**
-     * This function shows if no cards exist in the database of the user
-     */
-    if (cards_lists.length == 0) {
-        console.log(cards_lists);
-        document.getElementById("error_messages").innerHTML = 'You currently have no cards saved';
-    }
-}
-no_cards_exist();
-
 function get_current_day() {
     /**
      * This function gets the current day 

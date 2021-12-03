@@ -5,18 +5,15 @@
 * [Contents](#content)
 
 ## General Info
-This browser based web application to ...
-*Hi my name is Jack. I'm excited about this project because I enjoy coding.
-*Hi my name is Urjit, I'm excited about this project.
-*Hi I'm Teferi and I'm excited.
-	
+Welcome to IMinder! This is a web based app to store, track and view your progress. 
+
 ## Technologies
 Technologies used for this project:
-* HTML, CSS
+* HTML, CSS, SCSS
 * JavaScript
 * Bootstrap 
 * Firebase
-	
+
 ## Content
 Content of the project folder:
 
@@ -39,7 +36,7 @@ It has the following subfolders and files:
     /calendar.css.map           # 
     /login.css                  # 
     /main.css                   # 
-    /profile.css                #  
+    /profile.css                # 
     /reminders.css              # 
 
 ├── images                   # Folder for images
