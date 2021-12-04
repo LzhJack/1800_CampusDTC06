@@ -13,8 +13,9 @@ html body .page-hero h3 {
 html body .page-hero p {
   color: #05F4B7
 }
+
 .table-responsive {
-  overflow-x:initial;
+  overflow-x: initial;
 }
 
 html body .card {

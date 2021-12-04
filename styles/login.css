@@ -108,7 +108,7 @@ input[type=password] {
 
 input[type=text_area]:focus,
 #login_button,
-input[type=password]  {
+input[type=password] {
   background-color: #ccc2c2;
   outline-color: #371BB1;
 }

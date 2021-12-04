@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: 'Oswald', sans-serif;
     font-family: 'Roboto Condensed', sans-serif;
 }
@@ -141,4 +141,4 @@ div {
 
 a.nav-link {
     font-size: 18px;
-  }
+}

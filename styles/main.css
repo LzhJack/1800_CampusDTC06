@@ -8,6 +8,7 @@ body {
   height: 100vh;
   background-color: white;
 }
+
 a {
   color: #92badd;
   display: inline-block;
@@ -23,15 +24,18 @@ textarea {
 button:not([id="date_button"]) {
   border: none;
 }
+
 .assignment_card {
 
   background-color: white;
   border-radius: 10px 10px 10px 10px;
 }
+
 #add_card,
-#add_card i{
+#add_card i {
   display: flex;
 }
+
 #add_card:hover {
   background-color: red;
 }
@@ -40,17 +44,18 @@ button:not([id="date_button"]) {
   margin-top: 2em;
 
 }
-.btn.btn-info{
-  height:50px;
+
+.btn.btn-info {
+  height: 50px;
 }
 
-.btn.btn-secondary{
-  height:50px;
+.btn.btn-secondary {
+  height: 50px;
 }
 
 #remove_card {
   background-color: red;
-  height:50px;
+  height: 50px;
 }
 
 .assignment_card {
@@ -74,9 +79,9 @@ button:not([id="date_button"]) {
   cursor: pointer;
 }
 
-.btn.btn-default{
-  width:30px;
-  height:30px;
+.btn.btn-default {
+  width: 30px;
+  height: 30px;
   padding-right: 25px;
   border: 0;
   outline: auto;

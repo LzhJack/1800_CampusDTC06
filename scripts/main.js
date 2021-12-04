@@ -176,7 +176,7 @@ function create_card_from_db(title, description, due_date, card_id) {
 
 }
 
-function change_box_shadow(card_id, due_date, on_load) { 
+function change_box_shadow(card_id, due_date, on_load) {
     /**
      * This function sets the box and shadow color of each card according to its due date
      * Red for overdue/current day, Blue for any other day
@@ -348,7 +348,7 @@ function add_card() {
                     archive: false
                 })
                 disable_card_form(false);
-                window.scrollTo(0,document.body.scrollHeight);
+                window.scrollTo(0, document.body.scrollHeight);
             } else {
                 console.log('new');
                 create_card_from_db('Assignment Title', 'Assignment Description', '12/03/2021', new_card_id);
@@ -363,7 +363,7 @@ function add_card() {
                     archive: false
                 })
                 disable_card_form(false);
-                window.scrollTo(0,document.body.scrollHeight);
+                window.scrollTo(0, document.body.scrollHeight);
 
             }
 
@@ -391,7 +391,7 @@ function remove_card() {
      * This function removes the card from the page
      * It also updates the database and sets the archived boolean to true
      */
-    
+
     localStorage.removeItem('events_to_set1');
     localStorage.removeItem('events');
     card_documents2 = [];
@@ -410,7 +410,7 @@ function remove_card() {
     card_active = false;
     get_documents2(cards_lists[0]);
     document.getElementById(current_card_id).remove();
-    
+
 }
 
 function get_current_day() {
