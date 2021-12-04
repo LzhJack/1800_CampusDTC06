@@ -1,1 +1,4 @@
 .DS_Store
+.firebase
+.idea
+.vscode
