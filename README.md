@@ -19,12 +19,12 @@ Content of the project folder:
 
 ```
  Top level of project folder: 
-├── .firebaserc
+├── .firebaserc              # Not Included On GitHub
 ├── .gitignore               # Git ignore file
 ├── index.html               # Landing page of the website
-├── firebase.json
-├── firestore.indexes.json
-├── firestore.rules
+├── firebase.json            # Not Included On GitHub
+├── firestore.indexes.json   # Not Included On GitHub
+├── firestore.rules          # Not Included On GitHub
 └── README.md
 
 It has the following subfolders and files:
@@ -67,6 +67,7 @@ It has the following subfolders and files:
     /main.js                    # 
     /profile.js                 # 
     /reminder.js                # 
+    /firebase.js                # Not Included On GitHub
 
 ├── styles                   # Folder for styles
     /bootstrap.min.css          # 
